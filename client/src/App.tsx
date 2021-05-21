@@ -1,6 +1,7 @@
 import './App.scss';
+import React from 'react';
 
-function App() {
+function App(): JSX.Element {
   return (
     <div>
       <h1>Hello!</h1>
