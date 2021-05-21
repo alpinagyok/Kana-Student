@@ -2,15 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { Provider } from 'react-redux';
+import {
+  Route, BrowserRouter as Router, Switch, Redirect,
+} from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
+import Test from './Test';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Router>
+      <Provider store={store}>
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route exact path="/test" component={Test} />
+          <Route path="/404" component={Test} />
+          <Redirect to="/404" />
+        </Switch>
+      </Provider>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root'),
 );
