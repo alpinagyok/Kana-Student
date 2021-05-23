@@ -9,17 +9,21 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
 import Test from './Test';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Provider store={store}>
+        <Header />
         <Switch>
           <Route exact path="/" component={App} />
           <Route exact path="/test" component={Test} />
           <Route path="/404" component={Test} />
           <Redirect to="/404" />
         </Switch>
+        <Footer />
       </Provider>
     </Router>
   </React.StrictMode>,
