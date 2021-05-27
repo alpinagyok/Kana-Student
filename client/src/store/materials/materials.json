@@ -1,0 +1,95 @@
+[{
+  "id": "1",
+  "name": "Hiragana",
+  "japName": "あ",
+  "kanas": [
+    [
+      {
+        "id": "1",
+        "japName": "あ",
+        "romName": "a"
+      },
+      {
+        "id": "2",
+        "japName": "い",
+        "romName": "i"
+      },
+      {
+        "id": "3",
+        "japName": "う",
+        "romName": "u"
+      },
+      {
+        "id": "4",
+        "japName": "え",
+        "romName": "e"
+      },
+      {
+        "id": "5",
+        "japName": "お",
+        "romName": "o"
+      }
+    ],
+    [
+      {
+        "id": "6",
+        "japName": "か",
+        "romName": "ka"
+      },
+      {
+        "id": "7",
+        "japName": "き",
+        "romName": "ki"
+      },
+      {
+        "id": "8",
+        "japName": "く",
+        "romName": "ku"
+      },
+      {
+        "id": "9",
+        "japName": "け",
+        "romName": "ke"
+      },
+      {
+        "id": "10",
+        "japName": "こ",
+        "romName": "ko"
+      }
+    ]
+  ]
+},
+{
+  "id": "2",
+  "name": "Katakana",
+  "japName": "ア",
+  "kanas": [
+    [
+      {
+        "id": "11",
+        "japName": "ア",
+        "romName": "a"
+      },
+      {
+        "id": "12",
+        "japName": "イ",
+        "romName": "i"
+      },
+      {
+        "id": "13",
+        "japName": "ウ",
+        "romName": "u"
+      },
+      {
+        "id": "14",
+        "japName": "エ",
+        "romName": "e"
+      },
+      {
+        "id": "15",
+        "japName": "オ",
+        "romName": "o"
+      }
+    ]
+  ]
+}]

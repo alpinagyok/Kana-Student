@@ -1,28 +1,24 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { FetchStatus, MaterialBlock } from '../interfaces';
+import materialsJson from './materials.json';
 
-interface Kana {
-  id: string;
-  name: string;
-  imgURL: string;
+type InitialState = {
+  materials: MaterialBlock[];
+  status: FetchStatus;
+  error: string | undefined;
 }
 
-type MaterialName = 'Hiragana' | 'Katakana'
+const initialState: InitialState = {
+  materials: [],
+  status: 'idle',
+  error: undefined,
+};
 
-type MaterialBlock = {
-  name: MaterialName;
-  img: string;
-  kanas: Kana[];
-}
-
-type InitialState = MaterialBlock[]
-
-const initialState: InitialState = [
-  {
-    name: 'Hiragana',
-    img: 'adad',
-    kanas: [],
-  },
-];
+export const fetchMaterials = createAsyncThunk('materials/fetchMaterials', async () => {
+  // const response = await client.get('/fakeApi/materials')
+  const response = await new Promise((res) => setTimeout(() => res(materialsJson), 500));
+  return response;
+});
 
 const slice = createSlice({
   name: 'materials',
@@ -30,7 +26,21 @@ const slice = createSlice({
   reducers: {
 
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchMaterials.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchMaterials.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.materials = action.payload as MaterialBlock[];
+      })
+      .addCase(fetchMaterials.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+  },
 });
 
-// export const { setMaterialBlock } = slice.actions;
+// export const { setMaterialBlockID } = slice.actions;
 export default slice.reducer;

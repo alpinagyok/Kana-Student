@@ -54,6 +54,18 @@
                     "state"
                 ]
             }
+        ],
+        "array-element-newline": [
+            "error",
+            {
+                "minItems": 4
+            }
+        ],
+        "array-bracket-newline": [
+            "error",
+            {
+                "multiline": true
+            }
         ]
     },
     "settings": {

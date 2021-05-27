@@ -7,10 +7,14 @@ const reducer = {
   materials: materialsReducer,
 };
 
-export default configureStore({
+const rootStore = configureStore({
   reducer,
   devTools: {
     name: 'Kana Student',
     trace: true,
   },
 });
+
+export type GetState = ReturnType<typeof rootStore.getState>;
+
+export default rootStore;
