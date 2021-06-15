@@ -11,7 +11,8 @@ import store from './store';
 import Test from './Test';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import LessonStarter from './pages/LessonStarter';
+import LessonStarter from './pages/learn/LessonStarter';
+import Stepper from './pages/learn/Stepper';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,7 +21,7 @@ ReactDOM.render(
         <Header />
         <Switch>
           <Route exact path="/" component={App} />
-          <Route exact path="/learn" component={LessonStarter} />
+          <Route exact path="/learn" component={Stepper} />
           <Route exact path="/test" component={Test} />
           <Route path="/404" component={Test} />
           <Redirect to="/404" />

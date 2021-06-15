@@ -57,9 +57,7 @@
         ],
         "array-element-newline": [
             "error",
-            {
-                "minItems": 4
-            }
+            "consistent"
         ],
         "array-bracket-newline": [
             "error",
