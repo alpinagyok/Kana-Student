@@ -1,7 +1,9 @@
 import { GetState } from '..';
-import { FetchStatus, Kana, MaterialBlock } from '../interfaces';
+import {
+  FetchStatus, Kana, SimplifiedMaterialBlock,
+} from '../interfaces';
 
-export const getSelectedMaterialsBlockID = (state: GetState): string | undefined => (
+export const getSelectedMaterialsBlock = (state: GetState): SimplifiedMaterialBlock | undefined => (
   state.lesson.selectedMaterialsBlock);
 export const getPreparedKanas = (state: GetState): Kana[] | undefined => state.lesson.preparedKanas;
 export const getLessonType = (state: GetState): string | undefined => state.lesson.lessonType;

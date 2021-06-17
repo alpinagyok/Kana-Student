@@ -8,9 +8,9 @@ import {
   FAILED, GUESSER_LESSON, IDLE, LOADING, SUCCEEDED, WRITER_LESSON,
 } from '../../store/interfaces';
 import {
-  addPreparedKanas, removePreparedKanas, setLessonType, setMaterialBlockID, setPreparedKanas,
+  addPreparedKanas, removePreparedKanas, setLessonType, setMaterialBlock, setPreparedKanas,
 } from '../../store/lesson/reducer';
-import { getPreparedKanas, getSelectedMaterialsBlockID } from '../../store/lesson/selectors';
+import { getPreparedKanas, getSelectedMaterialsBlock } from '../../store/lesson/selectors';
 import { fetchMaterials } from '../../store/materials/reducer';
 import { getMaterials, getMaterialsStatus } from '../../store/materials/selectors';
 
@@ -22,7 +22,7 @@ const LessonStarter: React.FC<Props> = ({ incrementStep }) => {
   const dispatch = useDispatch();
   const materials = useSelector(getMaterials);
   const materialsStatus = useSelector(getMaterialsStatus);
-  const selectedMaterial = useSelector(getSelectedMaterialsBlockID);
+  const selectedMaterial = useSelector(getSelectedMaterialsBlock);
   const preparedKanas = useSelector(getPreparedKanas);
 
   useEffect(() => {
@@ -44,7 +44,9 @@ const LessonStarter: React.FC<Props> = ({ incrementStep }) => {
             key={materialBlock.id}
             type="button"
             onClick={() => {
-              dispatch(setMaterialBlockID(materialBlock.id));
+              dispatch(setMaterialBlock(
+                (({ id, name }) => ({ id, name }))(materialBlock),
+              ));
             }}
           >
             {materialBlock.name}
@@ -54,7 +56,7 @@ const LessonStarter: React.FC<Props> = ({ incrementStep }) => {
         <table>
           <tbody>
             {materials.find((materialBlock) => (
-              materialBlock.id === selectedMaterial))?.kanas.map((kanaRow) => (
+              materialBlock.id === selectedMaterial?.id ?? ''))?.kanas.map((kanaRow) => (
                 <tr key={`row${kanaRow[0].id}`}>
                   {kanaRow.map((kana) => (
                     <td

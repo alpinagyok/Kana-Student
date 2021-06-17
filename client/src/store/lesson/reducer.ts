@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Kana, LessonType } from '../interfaces';
+import {
+  Kana, LessonType, SimplifiedMaterialBlock,
+} from '../interfaces';
 
 interface InitialState {
-  selectedMaterialsBlock?: string;
+  selectedMaterialsBlock?: SimplifiedMaterialBlock;
   lessonType?: LessonType;
   successStreak: number;
   totalAnswers: number;
@@ -20,9 +22,9 @@ const slice = createSlice({
   name: 'lesson',
   initialState,
   reducers: {
-    setMaterialBlockID: (state, { payload }: PayloadAction<string>) => {
+    setMaterialBlock: (state, { payload }: PayloadAction<SimplifiedMaterialBlock>) => {
       // If new block is selected, clear lesson data, else do nothing
-      if (state.selectedMaterialsBlock !== payload) {
+      if (state.selectedMaterialsBlock?.id !== payload.id) {
         state.selectedMaterialsBlock = payload;
         state.preparedKanas = [];
         state.currentKana = undefined;
@@ -55,7 +57,7 @@ const slice = createSlice({
 });
 
 export const {
-  setMaterialBlockID,
+  setMaterialBlock,
   setLessonType,
   setPreparedKanas,
   addPreparedKanas,

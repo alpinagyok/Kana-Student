@@ -1,8 +1,8 @@
 import React from 'react';
-import { MaterialName } from '../../store/interfaces';
+import { SimplifiedMaterialBlock } from '../../store/interfaces';
 
 interface Props {
-  selectedMaterial: string | undefined;
+  selectedMaterial: SimplifiedMaterialBlock;
 }
 
 const LessonQuestion: React.FC<Props> = ({ selectedMaterial }) => {
@@ -13,7 +13,7 @@ const LessonQuestion: React.FC<Props> = ({ selectedMaterial }) => {
       <h1>
         This is tab
         {' '}
-        {selectedMaterial}
+        {selectedMaterial.name}
       </h1>
     </div>
   );

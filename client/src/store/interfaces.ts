@@ -6,9 +6,12 @@ export interface Kana {
 
 export type MaterialName = 'Hiragana' | 'Katakana'
 
-export type MaterialBlock = {
+export type SimplifiedMaterialBlock = {
   id: string;
   name: MaterialName;
+}
+
+export interface MaterialBlock extends SimplifiedMaterialBlock {
   japName: string;
   kanas: Kana[][];
 }
