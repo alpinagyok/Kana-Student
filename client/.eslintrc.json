@@ -64,7 +64,8 @@
             {
                 "multiline": true
             }
-        ]
+        ],
+        "react/prop-types": 0
     },
     "settings": {
         "import/resolver": {
