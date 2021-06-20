@@ -50,8 +50,20 @@ const slice = createSlice({
       state.preparedKanas = state.preparedKanas.filter((preparedKana) => (
         !payload.some((payloadKana) => payloadKana.id === preparedKana.id)));
     },
+    shufflePreparedKanas: (state) => {
+      const { preparedKanas } = state;
+      // shuffle prepped kanas
+      for (let i = preparedKanas.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [preparedKanas[i], preparedKanas[j]] = [preparedKanas[j], preparedKanas[i]];
+      }
+      state.currentKana = preparedKanas[Math.floor(Math.random() * 4)];
+    },
     clearPreparedKanas: (state) => {
       state.preparedKanas = [];
+    },
+    setCurrentKana: (state, { payload }: PayloadAction<Kana>) => {
+      state.currentKana = payload;
     },
   },
 });
@@ -62,6 +74,8 @@ export const {
   setPreparedKanas,
   addPreparedKanas,
   removePreparedKanas,
+  shufflePreparedKanas,
   clearPreparedKanas,
+  setCurrentKana,
 } = slice.actions;
 export default slice.reducer;
