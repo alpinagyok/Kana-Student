@@ -1,6 +1,6 @@
 import { GetState } from '..';
 import {
-  FetchStatus, Kana, SimplifiedMaterialBlock,
+  Kana, SimplifiedMaterialBlock,
 } from '../interfaces';
 
 export const getSelectedMaterialsBlock = (state: GetState): SimplifiedMaterialBlock | undefined => (

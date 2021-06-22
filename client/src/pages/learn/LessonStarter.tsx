@@ -5,10 +5,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  FAILED, GUESSER_LESSON, IDLE, LOADING, SUCCEEDED, WRITER_LESSON,
+  FAILED, IDLE, LOADING, SUCCEEDED,
 } from '../../store/interfaces';
 import {
-  addPreparedKanas, removePreparedKanas, setLessonType, setMaterialBlock, setPreparedKanas,
+  addPreparedKanas, removePreparedKanas, setMaterialBlock,
 } from '../../store/lesson/reducer';
 import { getPreparedKanas, getSelectedMaterialsBlock } from '../../store/lesson/selectors';
 import { fetchMaterials } from '../../store/materials/reducer';
