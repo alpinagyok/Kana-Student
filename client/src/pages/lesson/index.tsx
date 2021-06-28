@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import { Kana, WRITER_LESSON } from '../../store/interfaces';
-import { shufflePreparedKanas } from '../../store/lesson/reducer';
+import { setStreak, shufflePreparedKanas } from '../../store/lesson/reducer';
 import {
   getCurrentKana, getLessonType, getPreparedKanas, getSelectedMaterialsBlock,
 } from '../../store/lesson/selectors';
@@ -37,14 +37,11 @@ const Lesson: React.FC = () => {
     chosenKana: Kana,
     kanaToGuess: Kana,
   ): void => {
-    if (chosenKana.id === kanaToGuess.id) {
-      setIsAnswerCorrect(true);
-    } else {
-      setIsAnswerCorrect(false);
-    }
+    setIsAnswerCorrect(chosenKana.id === kanaToGuess.id);
     setIsOpen(true);
     setCorrectKana(currentKana);
     dispatch(shufflePreparedKanas());
+    dispatch(setStreak(chosenKana.id === kanaToGuess.id));
   };
 
   return (
