@@ -1,16 +1,22 @@
 import React from 'react';
-import { SimplifiedMaterialBlock } from '../../store/interfaces';
+import { Kana, SimplifiedMaterialBlock } from '../../store/interfaces';
 
 interface Props {
   selectedMaterial: SimplifiedMaterialBlock;
+  kanaToGuess: Kana;
 }
 
-const LessonQuestion: React.FC<Props> = ({ selectedMaterial }) => (
+const LessonQuestion: React.FC<Props> = ({ selectedMaterial, kanaToGuess }) => (
   <div>
     <h1>
       This is tab
       {' '}
       {selectedMaterial.name}
+    </h1>
+    <h1>
+      What is this kana?
+      {' '}
+      {kanaToGuess.romName}
     </h1>
   </div>
 );
