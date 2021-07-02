@@ -56,6 +56,7 @@ const Lesson: React.FC = () => {
               randomKanas={preparedKanas.slice(0, 4)}
               kanaToGuess={currentKana}
               handleKanaChoice={handleKanaChoice}
+              selectedMaterial={selectedMaterial}
             />
           ) : (
             <Guesser

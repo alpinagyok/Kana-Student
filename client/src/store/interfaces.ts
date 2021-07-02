@@ -4,7 +4,7 @@ export interface Kana {
   romName: string;
 }
 
-export type MaterialName = 'Hiragana' | 'Katakana'
+export type MaterialName = 'hiragana' | 'katakana'
 
 export type SimplifiedMaterialBlock = {
   id: string;

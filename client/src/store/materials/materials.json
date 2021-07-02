@@ -1,6 +1,6 @@
 [{
   "id": "1",
-  "name": "Hiragana",
+  "name": "hiragana",
   "japName": "あ",
   "kanas": [
     [
@@ -61,7 +61,7 @@
 },
 {
   "id": "2",
-  "name": "Katakana",
+  "name": "katakana",
   "japName": "ア",
   "kanas": [
     [
