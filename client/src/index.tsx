@@ -24,7 +24,7 @@ ReactDOM.render(
           <Route exact path="/" component={App} />
           <Route exact path="/learn" component={Stepper} />
           <Route exact path="/lesson" component={Lesson} />
-          <Route exact path="/test" component={Writer} />
+          <Route exact path="/test" component={Test} />
           <Route path="/404" component={Test} />
           <Redirect to="/404" />
         </Switch>

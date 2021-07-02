@@ -52,7 +52,7 @@ const Lesson: React.FC = () => {
         <LessonQuestion selectedMaterial={selectedMaterial} kanaToGuess={currentKana} />
         { lessonType === WRITER_LESSON
           ? (
-            <Guesser
+            <Writer
               randomKanas={preparedKanas.slice(0, 4)}
               kanaToGuess={currentKana}
               handleKanaChoice={handleKanaChoice}
