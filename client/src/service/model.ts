@@ -20,12 +20,12 @@ export const loadModel = async (
   } catch { }
 };
 
-export const predict = (
+export const predict = async (
   model: LayersModel | undefined,
   canvas: HTMLCanvasElement | null,
   context: CanvasRenderingContext2D | null,
   materialName: string,
-): void => {
+): Promise<string> => {
   if (model && canvas && context) {
     let inputImage = browser.fromPixels(context.getImageData(0, 0, 48, 48), 1);
     inputImage = inputImage.asType('float32');
@@ -39,17 +39,20 @@ export const predict = (
 
     const result = model.predict(inputImage);
 
-    (result as Tensor).array().then((res) => {
-      const mappedResult = [];
-      for (let i = 0; i < (res as number[][])[0].length; i += 1) {
-        mappedResult.push([
-          models.find((modelInfo) => modelInfo.name === materialName)?.label[i],
-          (res as number[][])[0][i] * 100,
-        ]);
-      }
+    const tensorArray = await (result as Tensor).array();
 
-      mappedResult.sort((a, b) => (b[1] as number) - (a[1] as number));
-      console.log(mappedResult.slice(0, 3));
-    });
+    const mappedResult: [string, number][] = [];
+    for (let i = 0; i < (tensorArray as number[][])[0].length; i += 1) {
+      mappedResult.push([
+        models.find((modelInfo) => modelInfo.name === materialName)?.label[i] ?? 'unknown',
+        (tensorArray as number[][])[0][i] * 100,
+      ]);
+    }
+
+    mappedResult.sort((a, b) => (b[1] as number) - (a[1] as number));
+    console.log(mappedResult.slice(0, 3));
+
+    return mappedResult[0][0];
   }
+  return 'error';
 };

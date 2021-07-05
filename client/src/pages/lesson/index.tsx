@@ -34,14 +34,14 @@ const Lesson: React.FC = () => {
   }, []);
 
   const handleKanaChoice = (
-    chosenKana: Kana,
+    chosenKanaName: string,
     kanaToGuess: Kana,
   ): void => {
-    setIsAnswerCorrect(chosenKana.id === kanaToGuess.id);
+    setIsAnswerCorrect(chosenKanaName === kanaToGuess.japName);
     setIsOpen(true);
     setCorrectKana(currentKana);
     dispatch(shufflePreparedKanas());
-    dispatch(setStreak(chosenKana.id === kanaToGuess.id));
+    dispatch(setStreak(chosenKanaName === kanaToGuess.japName));
   };
 
   return (

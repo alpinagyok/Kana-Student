@@ -13,7 +13,7 @@ interface Props {
   kanaToGuess: Kana;
   selectedMaterial: SimplifiedMaterialBlock | undefined;
   handleKanaChoice: (
-    chosenKana: Kana,
+    chosenKanaName: string,
     kanaToGuess: Kana,
   ) => void
 }
@@ -50,7 +50,7 @@ const Writer: React.FC<Props> = ({
       }
     }
     if (!model) { loadModel(materialName, setModel); }
-  }, [model]);
+  }, [model, randomKanas, kanaToGuess]);
 
   const beginDrawing = (event: React.MouseEvent | React.TouchEvent) => {
     if (context) {
@@ -117,10 +117,16 @@ const Writer: React.FC<Props> = ({
     }
   };
 
+  const handlePredict = async () => {
+    const predictedKana = await predict(model, canvas, context, materialName);
+    handleKanaChoice(predictedKana, kanaToGuess);
+    clearCanvas();
+  };
+
   return (
     <div>
-      <button type="button" onClick={clearCanvas}>x</button>
-      <button type="button" onClick={() => predict(model, canvas, context, materialName)}>predict</button>
+      <button type="button" onClick={() => clearCanvas()}>x</button>
+      <button type="button" onClick={() => handlePredict()}>predict</button>
       <canvas
         onMouseDown={beginDrawing}
         onTouchStart={beginDrawing}
