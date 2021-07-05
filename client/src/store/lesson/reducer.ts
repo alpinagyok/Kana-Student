@@ -60,7 +60,7 @@ const slice = createSlice({
   extraReducers: (builder) => builder
     .addCase(removePreparedKanas, (state, { payload }) => {
       state.preparedKanas = state.preparedKanas.filter((preparedKana) => (
-        !payload.some((payloadKana) => payloadKana.id === preparedKana.id)));
+        !payload.some((payloadKana) => payloadKana.romName === preparedKana.romName)));
     })
     .addCase(setPreparedKanas, (state, { payload }) => {
       state.preparedKanas = payload;
@@ -68,7 +68,10 @@ const slice = createSlice({
     .addCase(addPreparedKanas, (state, { payload }) => {
       // Adds only new kanas, makes sure there is no duplication
       payload.forEach((payloadKana) => {
-        if (!state.preparedKanas.some((preparedKana) => preparedKana.id === payloadKana.id)) {
+        if (!state.preparedKanas.some(
+          (preparedKana) => preparedKana.romName === payloadKana.romName,
+        )
+        ) {
           state.preparedKanas.push(payloadKana);
         }
       });

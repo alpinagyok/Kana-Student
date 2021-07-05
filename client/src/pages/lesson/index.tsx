@@ -22,6 +22,7 @@ const Lesson: React.FC = () => {
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [correctKana, setCorrectKana] = useState<Kana>();
+  const [chosentKana, setChosentKana] = useState<Kana>();
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
 
   useEffect(() => {
@@ -34,14 +35,15 @@ const Lesson: React.FC = () => {
   }, []);
 
   const handleKanaChoice = (
-    chosenKanaName: string,
+    chosenKana: Kana,
     kanaToGuess: Kana,
   ): void => {
-    setIsAnswerCorrect(chosenKanaName === kanaToGuess.japName);
+    setChosentKana(chosenKana);
+    setIsAnswerCorrect(chosenKana.japName === kanaToGuess.japName);
     setIsOpen(true);
     setCorrectKana(currentKana);
     dispatch(shufflePreparedKanas());
-    dispatch(setStreak(chosenKanaName === kanaToGuess.japName));
+    dispatch(setStreak(chosenKana.japName === kanaToGuess.japName));
   };
 
   return (
@@ -72,18 +74,11 @@ const Lesson: React.FC = () => {
         contentLabel="Example Modal"
       >
         <button type="button" onClick={() => setIsOpen(false)}>close</button>
-        {correctKana && (
+        {correctKana && chosentKana && (
           <div>
-            your anwser was
-            {' '}
-            {isAnswerCorrect ? 'correct' : 'wrong'}
-            :
-            {' '}
-            {correctKana.japName}
-            {' '}
-            (
-            {correctKana.romName}
-            )
+            {`your anwser was ${isAnswerCorrect ? 'correct' : 'wrong'}`}
+            {`correct answer: ${correctKana.japName} (${correctKana.romName})`}
+            {`your answer: ${chosentKana.japName} (${chosentKana.romName})`}
           </div>
         )}
       </Modal>

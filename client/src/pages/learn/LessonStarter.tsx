@@ -57,12 +57,12 @@ const LessonStarter: React.FC<Props> = ({ incrementStep }) => {
           <tbody>
             {materials.find((materialBlock) => (
               materialBlock.id === selectedMaterial?.id ?? ''))?.kanas.map((kanaRow) => (
-                <tr key={`row${kanaRow[0].id}`}>
+                <tr key={`row${kanaRow[0].romName}`}>
                   {kanaRow.map((kana) => (
                     <td
-                      key={`kana${kana.id}`}
-                      onClick={() => (preparedKanas?.find((preparedKana) => preparedKana.id === kana.id) ? dispatch(removePreparedKanas([kana])) : dispatch(addPreparedKanas([kana])))}
-                      style={preparedKanas?.find((preparedKana) => preparedKana.id === kana.id) ? { color: 'green' } : {}}
+                      key={`kana${kana.romName}`}
+                      onClick={() => (preparedKanas?.find((preparedKana) => preparedKana.romName === kana.romName) ? dispatch(removePreparedKanas([kana])) : dispatch(addPreparedKanas([kana])))}
+                      style={preparedKanas?.find((preparedKana) => preparedKana.romName === kana.romName) ? { color: 'green' } : {}}
                     >
                       {kana.japName}
 

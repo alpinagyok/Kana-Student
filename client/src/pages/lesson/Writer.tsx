@@ -13,7 +13,7 @@ interface Props {
   kanaToGuess: Kana;
   selectedMaterial: SimplifiedMaterialBlock | undefined;
   handleKanaChoice: (
-    chosenKanaName: string,
+    chosenKana: Kana,
     kanaToGuess: Kana,
   ) => void
 }
@@ -118,8 +118,8 @@ const Writer: React.FC<Props> = ({
   };
 
   const handlePredict = async () => {
-    const predictedKana = await predict(model, canvas, context, materialName);
-    handleKanaChoice(predictedKana, kanaToGuess);
+    const predictedKanaJapName = await predict(model, canvas, context, materialName);
+    handleKanaChoice(predictedKanaJapName, kanaToGuess);
     clearCanvas();
   };
 

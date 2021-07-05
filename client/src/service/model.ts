@@ -2,6 +2,7 @@ import {
   browser, LayersModel, loadLayersModel, Tensor,
 } from '@tensorflow/tfjs';
 import models from '../pages/lesson/models';
+import { Kana } from '../store/interfaces';
 
 export const loadModel = async (
   materialName: string,
@@ -25,7 +26,7 @@ export const predict = async (
   canvas: HTMLCanvasElement | null,
   context: CanvasRenderingContext2D | null,
   materialName: string,
-): Promise<string> => {
+): Promise<Kana> => {
   if (model && canvas && context) {
     let inputImage = browser.fromPixels(context.getImageData(0, 0, 48, 48), 1);
     inputImage = inputImage.asType('float32');
@@ -41,10 +42,11 @@ export const predict = async (
 
     const tensorArray = await (result as Tensor).array();
 
-    const mappedResult: [string, number][] = [];
+    const mappedResult: [Kana, number][] = [];
     for (let i = 0; i < (tensorArray as number[][])[0].length; i += 1) {
+      const foundLabel = models.find((modelInfo) => modelInfo.name === materialName)?.label[i] ?? { romName: 'unknown', japName: 'unknown' };
       mappedResult.push([
-        models.find((modelInfo) => modelInfo.name === materialName)?.label[i] ?? 'unknown',
+        foundLabel,
         (tensorArray as number[][])[0][i] * 100,
       ]);
     }
@@ -54,5 +56,5 @@ export const predict = async (
 
     return mappedResult[0][0];
   }
-  return 'error';
+  return { romName: 'error', japName: 'error' };
 };

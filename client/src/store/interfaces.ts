@@ -1,5 +1,4 @@
 export interface Kana {
-  id: string;
   japName: string;
   romName: string;
 }

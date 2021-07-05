@@ -5,7 +5,7 @@ interface Props {
   randomKanas: Kana[];
   kanaToGuess: Kana;
   handleKanaChoice: (
-    chosenKanaName: string,
+    chosenKana: Kana,
     kanaToGuess: Kana,
   ) => void
 }
@@ -13,7 +13,7 @@ interface Props {
 const Guesser: React.FC<Props> = ({ randomKanas, kanaToGuess, handleKanaChoice }) => (
   <div>
     {randomKanas.map((kana) => (
-      <button key={kana.id} type="button" onClick={() => handleKanaChoice(kana.japName, kanaToGuess)}>{kana.japName}</button>
+      <button key={kana.romName} type="button" onClick={() => handleKanaChoice(kana, kanaToGuess)}>{kana.japName}</button>
     ))}
   </div>
 );
