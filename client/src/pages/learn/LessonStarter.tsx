@@ -53,27 +53,26 @@ const LessonStarter: React.FC<Props> = ({ incrementStep }) => {
           </button>
         ))}
 
-        <table>
-          <tbody>
-            {materials.find((materialBlock) => (
-              materialBlock.id === selectedMaterial?.id ?? ''))?.kanas.map((kanaRow) => (
-                <tr key={`row${kanaRow[0].romName}`}>
-                  {kanaRow.map((kana) => (
-                    <td
-                      key={`kana${kana.romName}`}
-                      onClick={() => (preparedKanas?.find((preparedKana) => preparedKana.romName === kana.romName) ? dispatch(removePreparedKanas([kana])) : dispatch(addPreparedKanas([kana])))}
-                      style={preparedKanas?.find((preparedKana) => preparedKana.romName === kana.romName) ? { color: 'green' } : {}}
-                    >
-                      {kana.japName}
+        <div>
+          {materials.find((materialBlock) => (
+            materialBlock.id === selectedMaterial?.id ?? ''))?.kanas.map((kanaRow) => (
+              <div key={`row${kanaRow[0].romName}`}>
+                {kanaRow.map((kana) => (
+                  <button
+                    type="button"
+                    key={`kana${kana.romName}`}
+                    onClick={() => (preparedKanas?.find((preparedKana) => preparedKana.romName === kana.romName) ? dispatch(removePreparedKanas([kana])) : dispatch(addPreparedKanas([kana])))}
+                    style={preparedKanas?.find((preparedKana) => preparedKana.romName === kana.romName) ? { color: 'green' } : {}}
+                  >
+                    {kana.japName}
 
-                    </td>
-                  ))}
-                  <td><button onClick={() => dispatch(addPreparedKanas(kanaRow))} type="button">Add row</button></td>
-                  <td><button onClick={() => dispatch(removePreparedKanas(kanaRow))} type="button">Remove row</button></td>
-                </tr>
-            ))}
-          </tbody>
-        </table>
+                  </button>
+                ))}
+                <button onClick={() => dispatch(addPreparedKanas(kanaRow))} type="button">Add row</button>
+                <button onClick={() => dispatch(removePreparedKanas(kanaRow))} type="button">Remove row</button>
+              </div>
+          ))}
+        </div>
 
         {preparedKanas && preparedKanas?.length > 3 && selectedMaterial && (
           <button type="button" onClick={() => incrementStep()}>Next</button>
