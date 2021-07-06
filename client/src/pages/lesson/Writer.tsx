@@ -30,10 +30,8 @@ const Writer: React.FC<Props> = ({
   let context: CanvasRenderingContext2D | null;
   let left: number; let top: number;
 
-  // const blackColor = '#000000';
-  // const whiteColor = '#FFFFFF';
-  const blackColor = '#FFFFFF';
-  const whiteColor = '#000000 ';
+  const blackColor = '#000000';
+  const whiteColor = '#FFFFFF';
 
   const materialName = selectedMaterial?.name ?? 'katakana';
 
@@ -46,7 +44,7 @@ const Writer: React.FC<Props> = ({
       ({ left, top } = canvas.getBoundingClientRect());
       if (context) {
         context.fillStyle = whiteColor;
-        context.fillRect(0, 0, 48, 48);
+        context.fillRect(0, 0, canvas.width, canvas.height);
       }
     }
     if (!model) { loadModel(materialName, setModel); }
@@ -61,8 +59,10 @@ const Writer: React.FC<Props> = ({
     <div>
       {model ? (
         <>
-          <button type="button" onClick={() => clearCanvas(canvas, context)}>x</button>
-          <button type="button" onClick={() => handlePredict()}>predict</button>
+          <div>
+            <button type="button" onClick={() => clearCanvas(canvas, context)}>x</button>
+            <button type="button" onClick={() => handlePredict()}>predict</button>
+          </div>
           <canvas
             onMouseDown={(e) => beginDrawing(context, e, left, top)}
             onTouchStart={(e) => beginDrawing(context, e, left, top)}
@@ -71,9 +71,16 @@ const Writer: React.FC<Props> = ({
             onMouseUp={() => endDrawing(context)}
             style={{ border: '1px solid black' }}
             ref={canvasRef}
+            width="300"
+            height="300"
+          />
+          <canvas
+            id="test"
+            style={{ border: '1px solid black' }}
             width="48"
             height="48"
           />
+          {/* <div id="test" /> */}
         </>
       ) : (
         <h1>loading</h1>

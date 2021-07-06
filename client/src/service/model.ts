@@ -4,6 +4,8 @@ import {
 import models from '../pages/lesson/models';
 import { Kana } from '../store/interfaces';
 
+const tensorSize = 48;
+
 export const loadModel = async (
   materialName: string,
   setModel: React.Dispatch<React.SetStateAction<LayersModel | undefined>>,
@@ -27,16 +29,41 @@ export const predict = async (
   context: CanvasRenderingContext2D | null,
   materialName: string,
 ): Promise<Kana> => {
-  if (model && canvas && context) {
-    let inputImage = browser.fromPixels(context.getImageData(0, 0, 48, 48), 1);
+  const newCanvas = document.createElement('canvas');
+  newCanvas.width = tensorSize;
+  newCanvas.height = tensorSize;
+  // const newCanvas: HTMLCanvasElement | null = document.querySelector('#test');
+  const newContext = newCanvas?.getContext('2d');
+
+  if (model && canvas && context && newContext) {
+    // load img from canvas
+    const imgPromise: Promise<HTMLImageElement> = new Promise((resolve) => {
+      const imageObject = new Image();
+      imageObject.onload = () => resolve(imageObject);
+      imageObject.src = canvas.toDataURL();
+    });
+
+    const imgObj = await imgPromise;
+
+    // scale the canvas img
+    newContext.fillStyle = '#FFFFFF';
+    newContext.fillRect(0, 0, tensorSize, tensorSize);
+    newContext.scale(tensorSize / canvas.width, tensorSize / canvas.height);
+    newContext.drawImage(imgObj, 0, 0);
+    newContext.scale(canvas.width / tensorSize, canvas.height / tensorSize);
+
+    // get tensor from canvas
+    let inputImage = browser.fromPixels(
+      newContext.getImageData(0, 0, tensorSize, tensorSize), 1,
+    );
     inputImage = inputImage.asType('float32');
     inputImage = inputImage.div(255.0);
 
-    // (inputImage as Tensor).array().then((res) => {
-    //   console.log((res as number[][]));
-    // });
+    // inverse colors
+    inputImage = inputImage.sub(1.0);
+    inputImage = inputImage.abs();
 
-    inputImage = inputImage.reshape([1, 48, 48, 1]);
+    inputImage = inputImage.reshape([1, tensorSize, tensorSize, 1]);
 
     const result = model.predict(inputImage);
 

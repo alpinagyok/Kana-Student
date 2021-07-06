@@ -1,12 +1,10 @@
 /* eslint-disable no-param-reassign */
 let drawing = false;
 let brushX = 0; let brushY = 0;
-const smoothnessRadius = 1;
+const smoothnessRadius = 40;
 
-// const blackColor = '#000000';
-// const whiteColor = '#FFFFFF';
-const blackColor = '#FFFFFF';
-const whiteColor = '#000000 ';
+const blackColor = '#000000';
+const whiteColor = '#FFFFFF';
 
 export const beginDrawing = (
   context: CanvasRenderingContext2D | null,
@@ -17,7 +15,7 @@ export const beginDrawing = (
     drawing = true;
 
     context.strokeStyle = blackColor;
-    context.lineWidth = 4;
+    context.lineWidth = 6;
 
     // handle both mobile and pc
     if (event.type === 'mousedown') {
@@ -82,7 +80,7 @@ export const clearCanvas = (
   if (context && canvas) {
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = whiteColor;
-    context.fillRect(0, 0, 48, 48);
+    context.fillRect(0, 0, canvas.width, canvas.height);
   }
 };
 
