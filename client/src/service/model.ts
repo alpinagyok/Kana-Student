@@ -6,21 +6,33 @@ import { Kana } from '../store/interfaces';
 
 const tensorSize = 48;
 
+const getStorageNames = (materialName: string): string[] => [
+  'weight_data',
+  'model_topology',
+  'info',
+  'model_metadata',
+  'weight_specs',
+].map((name) => `tensorflowjs_models/${materialName}-model/${name}`);
+
 export const loadModel = async (
   materialName: string,
   setModel: React.Dispatch<React.SetStateAction<LayersModel | undefined>>,
 ): Promise<void> => {
   let loadedModel: LayersModel;
   try {
-    if (localStorage.getItem(`tensorflowjs_models/${materialName}-model/model_metadata`)) {
+    // seems like on ios there's not enough memory for saving weights
+    // so need to check all model related data
+    if (getStorageNames(materialName).every((storageName) => localStorage.getItem(storageName))) {
       loadedModel = await loadLayersModel(`localstorage://${materialName}-model`);
     } else {
       loadedModel = await loadLayersModel(`https://firebasestorage.googleapis.com/v0/b/kana-student.appspot.com/o/${materialName}%2Fmodel.json?alt=media`);
       await loadedModel.save(`localstorage://${materialName}-model`);
     }
     setModel(loadedModel);
-    // eslint-disable-next-line no-empty
-  } catch { }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
 };
 
 export const predict = async (
