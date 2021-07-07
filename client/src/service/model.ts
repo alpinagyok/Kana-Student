@@ -6,32 +6,22 @@ import { Kana } from '../store/interfaces';
 
 const tensorSize = 48;
 
-const getStorageNames = (materialName: string): string[] => [
-  'weight_data',
-  'model_topology',
-  'info',
-  'model_metadata',
-  'weight_specs',
-].map((name) => `tensorflowjs_models/${materialName}-model/${name}`);
-
 export const loadModel = async (
   materialName: string,
   setModel: React.Dispatch<React.SetStateAction<LayersModel | undefined>>,
 ): Promise<void> => {
-  let loadedModel: LayersModel;
+  // TODO: check the database properly instead of try-catch monstrosity
   try {
-    // seems like on ios there's not enough memory for saving weights
-    // so need to check all model related data
-    if (getStorageNames(materialName).every((storageName) => localStorage.getItem(storageName))) {
-      loadedModel = await loadLayersModel(`localstorage://${materialName}-model`);
-    } else {
-      loadedModel = await loadLayersModel(`https://firebasestorage.googleapis.com/v0/b/kana-student.appspot.com/o/${materialName}%2Fmodel.json?alt=media`);
-      await loadedModel.save(`localstorage://${materialName}-model`);
-    }
-    setModel(loadedModel);
+    setModel(await loadLayersModel(`indexeddb://${materialName}-model`));
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log(e);
+    try {
+      const loadedModel = await loadLayersModel(`https://firebasestorage.googleapis.com/v0/b/kana-student.appspot.com/o/${materialName}%2Fmodel.json?alt=media`);
+      await loadedModel.save(`indexeddb://${materialName}-model`);
+      setModel(loadedModel);
+    } catch (ee) {
+      // eslint-disable-next-line no-console
+      console.log(ee);
+    }
   }
 };
 
@@ -44,7 +34,6 @@ export const predict = async (
   const newCanvas = document.createElement('canvas');
   newCanvas.width = tensorSize;
   newCanvas.height = tensorSize;
-  // const newCanvas: HTMLCanvasElement | null = document.querySelector('#test');
   const newContext = newCanvas?.getContext('2d');
 
   if (model && canvas && context && newContext) {
