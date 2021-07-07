@@ -4,48 +4,107 @@
   "japName": "あ",
   "kanas": [
     [
-      {
-        "japName": "あ",
-        "romName": "a"
-      },
-      {
-        "japName": "い",
-        "romName": "i"
-      },
-      {
-        "japName": "う",
-        "romName": "u"
-      },
-      {
-        "japName": "え",
-        "romName": "e"
-      },
-      {
-        "japName": "お",
-        "romName": "o"
-      }
+      { "romName": "a", "japName": "あ" },
+      { "romName": "i", "japName": "い" },
+      { "romName": "u", "japName": "う" },
+      { "romName": "e", "japName": "え" },
+      { "romName": "o", "japName": "お" }
     ],
     [
-      {
-        "japName": "か",
-        "romName": "ka"
-      },
-      {
-        "japName": "き",
-        "romName": "ki"
-      },
-      {
-        "japName": "く",
-        "romName": "ku"
-      },
-      {
-        "japName": "け",
-        "romName": "ke"
-      },
-      {
-        "japName": "こ",
-        "romName": "ko"
-      }
+      { "romName": "ka", "japName": "か" },
+      { "romName": "ki", "japName": "き" },
+      { "romName": "ku", "japName": "く" },
+      { "romName": "ke", "japName": "け" },
+      { "romName": "ko", "japName": "こ" }
+    ],
+    [
+      { "romName": "ga", "japName": "が" },
+      { "romName": "gi", "japName": "ぎ" },
+      { "romName": "gu", "japName": "ぐ" },
+      { "romName": "ge", "japName": "げ" },
+      { "romName": "go", "japName": "ご" }
+    ],
+    [
+      { "romName": "sa", "japName": "さ" },
+      { "romName": "shi", "japName": "し" },
+      { "romName": "su", "japName": "す" },
+      { "romName": "se", "japName": "せ" },
+      { "romName": "so", "japName": "そ" }
+    ],
+    [
+      { "romName": "za", "japName": "ざ" },
+      { "romName": "ji", "japName": "じ" },
+      { "romName": "zu", "japName": "ず" },
+      { "romName": "ze", "japName": "ぜ" },
+      { "romName": "zo", "japName": "ぞ" }
+    ],
+    [
+      { "romName": "ta", "japName": "た" },
+      { "romName": "chi", "japName": "ち" },
+      { "romName": "tsu", "japName": "つ" },
+      { "romName": "te", "japName": "て" },
+      { "romName": "to", "japName": "と" }
+    ],
+    [
+      { "romName": "da", "japName": "だ" },
+      { "romName": "ji, dji", "japName": "ぢ" },
+      { "romName": "dzu", "japName": "づ" },
+      { "romName": "de", "japName": "で" },
+      { "romName": "do", "japName": "ど" }
+    ],
+    [
+      { "romName": "na", "japName": "な" },
+      { "romName": "ni", "japName": "に" },
+      { "romName": "nu", "japName": "ぬ" },
+      { "romName": "ne", "japName": "ね" },
+      { "romName": "no", "japName": "の" }
+    ],
+    [
+      { "romName": "ha", "japName": "は" },
+      { "romName": "hi", "japName": "ひ" },
+      { "romName": "fu", "japName": "ふ" },
+      { "romName": "he", "japName": "へ" },
+      { "romName": "ho", "japName": "ほ" }
+    ],
+    [
+      { "romName": "ba", "japName": "ば" },
+      { "romName": "bi", "japName": "び" },
+      { "romName": "bu", "japName": "ぶ" },
+      { "romName": "be", "japName": "べ" },
+      { "romName": "bo", "japName": "ぼ" }
+    ],
+    [
+      { "romName": "pa", "japName": "ぱ" },
+      { "romName": "pi", "japName": "ぴ" },
+      { "romName": "pu", "japName": "ぷ" },
+      { "romName": "pe", "japName": "ぺ" },
+      { "romName": "po", "japName": "ぽ" }
+    ],
+    [
+      { "romName": "ma", "japName": "ま" },
+      { "romName": "mi", "japName": "み" },
+      { "romName": "mu", "japName": "む" },
+      { "romName": "me", "japName": "め" },
+      { "romName": "mo", "japName": "も" }
+    ],
+    [
+      { "romName": "ya", "japName": "や" },
+      { "romName": "yu", "japName": "ゆ" },
+      { "romName": "yo", "japName": "よ" }
+    ],
+    [
+      { "romName": "ra", "japName": "ら" },
+      { "romName": "ri", "japName": "り" },
+      { "romName": "ru", "japName": "る" },
+      { "romName": "re", "japName": "れ" },
+      { "romName": "ro", "japName": "ろ" }
+    ],
+    [
+      { "romName": "wa", "japName": "わ" },
+      { "romName": "wo", "japName": "を" }
+    ],
+    [
+      { "romName": "n", "japName": "ん" }
     ]
   ]
 },

@@ -1,7 +1,7 @@
 import {
   browser, LayersModel, loadLayersModel, Tensor,
 } from '@tensorflow/tfjs';
-import models from '../pages/lesson/models';
+import models from './modelLabels';
 import { Kana } from '../store/interfaces';
 
 const tensorSize = 48;
