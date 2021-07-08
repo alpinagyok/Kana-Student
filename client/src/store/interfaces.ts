@@ -27,3 +27,10 @@ export const SUCCEEDED = 'succeeded' as const;
 export const FAILED = 'failed' as const;
 
 export type FetchStatus = typeof IDLE | typeof LOADING | typeof SUCCEEDED | typeof FAILED;
+
+export interface Achievement {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+}

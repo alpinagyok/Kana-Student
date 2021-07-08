@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { FetchStatus, MaterialBlock } from '../interfaces';
+import { FetchStatus, IDLE, MaterialBlock } from '../interfaces';
 import materialsJson from './materials.json';
 
 type InitialState = {
@@ -10,7 +10,7 @@ type InitialState = {
 
 const initialState: InitialState = {
   materials: [],
-  status: 'idle',
+  status: IDLE,
   error: undefined,
 };
 

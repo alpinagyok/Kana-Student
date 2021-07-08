@@ -13,7 +13,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Stepper from './pages/learn/Stepper';
 import Lesson from './pages/lesson';
-import Writer from './pages/lesson/Writer';
+import Achievements from './pages/achievements';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -24,6 +24,7 @@ ReactDOM.render(
           <Route exact path="/" component={App} />
           <Route exact path="/learn" component={Stepper} />
           <Route exact path="/lesson" component={Lesson} />
+          <Route exact path="/achievements" component={Achievements} />
           <Route exact path="/test" component={Test} />
           <Route path="/404" component={Test} />
           <Redirect to="/404" />
