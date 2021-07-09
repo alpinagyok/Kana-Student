@@ -1,5 +1,6 @@
-import { Response } from 'express'
-import { db } from './config/firebase'
+import { Response } from 'express';
+import { QueryDocumentSnapshot } from 'firebase-functions/lib/providers/firestore';
+import { db } from './config/firebase';
 
 interface Kana {
 japName: string;
@@ -21,13 +22,15 @@ type Request = {
   body: MaterialBlock,
 }
 
-const getAllMaterials = async (req: Request, res: Response) => {
+const getAllMaterials = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const allMaterials: MaterialBlock[] = []
-    const querySnapshot = await db.collection('materials').get()
-    querySnapshot.forEach((doc: any) => allMaterials.push(doc.data()))
-    return res.status(200).json(allMaterials)
-  } catch(error) { return res.status(500).json(error.message) }
-}
+    const allMaterials: MaterialBlock[] = [];
+    const querySnapshot = await db.collection('materials').get();
+    querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+      allMaterials.push(doc.data() as MaterialBlock);
+    });
+    return res.status(200).json(allMaterials);
+  } catch (error) { return res.status(500).json(error.message); }
+};
 
-export { getAllMaterials }
+export default getAllMaterials;
