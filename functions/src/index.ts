@@ -10,4 +10,7 @@ app.get('/hello', (req: any, res: any) => {
 
 app.get('/materials', getAllMaterials)
 
-exports.api = functions.https.onRequest(app);
+const main = express();
+main.use('/api', app);
+
+exports.api = functions.https.onRequest(main);
