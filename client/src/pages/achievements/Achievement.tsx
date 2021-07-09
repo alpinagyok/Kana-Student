@@ -8,11 +8,11 @@ interface Props {
 
 const Achievement: React.FC<Props> = ({ achievement, isCompleted = false }) => {
   const {
-    id, name, description, icon,
+    name, description, icon,
   } = achievement;
 
   return (
-    <div key={`achievement_${id}`}>
+    <div>
       <h1>{name}</h1>
       <h1>{description}</h1>
       <h1>{icon}</h1>

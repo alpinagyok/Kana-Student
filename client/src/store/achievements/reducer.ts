@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import API_ENDPOINT from '../../api/constants';
 import { Achievement, FetchStatus, IDLE } from '../interfaces';
-import achievementsJson from './achievements.json';
 
 type InitialState = {
   achievements: Achievement[];
@@ -14,10 +15,10 @@ const initialState: InitialState = {
   error: undefined,
 };
 
-export const fetchAchievements = createAsyncThunk('achievements/fetchMaterials', async () => {
-  // const response = await client.get('/fakeApi/achievements')
-  const response = await new Promise((res) => setTimeout(() => res(achievementsJson), 500));
-  return response;
+export const fetchAchievements = createAsyncThunk('achievements/fetchAchievements', async () => {
+  const response = await axios.get<Achievement[]>(`${API_ENDPOINT}/achievements`);
+
+  return response.data;
 });
 
 const slice = createSlice({

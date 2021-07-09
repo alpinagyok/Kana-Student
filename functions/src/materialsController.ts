@@ -18,11 +18,7 @@ interface MaterialBlock {
   }[];
 }
 
-type Request = {
-  body: MaterialBlock,
-}
-
-const getAllMaterials = async (req: Request, res: Response): Promise<Response> => {
+const getAllMaterials = async (req: undefined, res: Response): Promise<Response> => {
   try {
     const allMaterials: MaterialBlock[] = [];
     const querySnapshot = await db.collection('materials').get();

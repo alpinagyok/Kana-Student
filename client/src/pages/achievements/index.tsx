@@ -24,7 +24,7 @@ const Achievements: React.FC = () => {
     );
   } else if (achievementsStatus === SUCCEEDED) {
     content = achievements.map((achievement) => (
-      <Achievement achievement={achievement} />
+      <Achievement key={`achievement_${achievement.id}`} achievement={achievement} />
     ));
   }
 
