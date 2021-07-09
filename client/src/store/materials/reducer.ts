@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import API_ENDPOINT from '../../api/constants';
 import { FetchStatus, IDLE, MaterialBlock } from '../interfaces';
-import materialsJson from './materials.json';
 
 type InitialState = {
   materials: MaterialBlock[];
@@ -15,9 +16,9 @@ const initialState: InitialState = {
 };
 
 export const fetchMaterials = createAsyncThunk('materials/fetchMaterials', async () => {
-  // const response = await client.get('/fakeApi/materials')
-  const response = await new Promise((res) => setTimeout(() => res(materialsJson), 500));
-  return response;
+  const response = await axios.get<MaterialBlock[]>(`${API_ENDPOINT}/materials`);
+
+  return response.data;
 });
 
 const slice = createSlice({
@@ -33,7 +34,7 @@ const slice = createSlice({
       })
       .addCase(fetchMaterials.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.materials = action.payload as MaterialBlock[];
+        state.materials = action.payload;
       })
       .addCase(fetchMaterials.rejected, (state, action) => {
         state.status = 'failed';

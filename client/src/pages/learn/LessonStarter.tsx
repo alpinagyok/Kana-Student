@@ -56,8 +56,8 @@ const LessonStarter: React.FC<Props> = ({ incrementStep }) => {
         <div>
           {materials.find((materialBlock) => (
             materialBlock.id === selectedMaterial?.id ?? ''))?.kanas.map((kanaRow) => (
-              <div key={`row${kanaRow[0].romName}`}>
-                {kanaRow.map((kana) => (
+              <div key={`row${kanaRow.row[0].romName}`}>
+                {kanaRow.row.map((kana) => (
                   <button
                     type="button"
                     key={`kana${kana.romName}`}
@@ -68,8 +68,8 @@ const LessonStarter: React.FC<Props> = ({ incrementStep }) => {
 
                   </button>
                 ))}
-                <button onClick={() => dispatch(addPreparedKanas(kanaRow))} type="button">Add row</button>
-                <button onClick={() => dispatch(removePreparedKanas(kanaRow))} type="button">Remove row</button>
+                <button onClick={() => dispatch(addPreparedKanas(kanaRow.row))} type="button">Add row</button>
+                <button onClick={() => dispatch(removePreparedKanas(kanaRow.row))} type="button">Remove row</button>
               </div>
           ))}
         </div>

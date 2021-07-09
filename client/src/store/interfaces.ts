@@ -12,7 +12,9 @@ export type SimplifiedMaterialBlock = {
 
 export interface MaterialBlock extends SimplifiedMaterialBlock {
   japName: string;
-  kanas: Kana[][];
+  kanas: {
+    row: Kana[];
+  }[];
 }
 
 export const GUESSER_LESSON = 'guesser' as const;
