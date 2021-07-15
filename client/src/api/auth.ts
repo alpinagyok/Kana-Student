@@ -1,12 +1,13 @@
 import { auth } from '../firebase';
 
-export const signIn = async (email: string, password: string): Promise<void> => {
+export const signIn = async (email: string, password: string): Promise<string> => {
   try {
     await auth.signInWithEmailAndPassword(
       email, password,
     );
+    return '';
   } catch (error) {
-    console.error('err', error);
+    return error.code;
   }
 };
 

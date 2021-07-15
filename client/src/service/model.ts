@@ -80,7 +80,6 @@ export const predict = async (
     }
 
     mappedResult.sort((a, b) => (b[1] as number) - (a[1] as number));
-    console.log(mappedResult.slice(0, 3));
 
     return mappedResult[0][0];
   }

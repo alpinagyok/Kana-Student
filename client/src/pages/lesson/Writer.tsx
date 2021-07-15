@@ -6,7 +6,7 @@ import React, {
   useEffect, useRef, useState,
 } from 'react';
 import {
-  beginDrawing, draw, endDrawing, clearCanvas,
+  beginDrawing, draw, endDrawing, clearCanvas, whiteColor,
 } from '../../service/drawing';
 import { loadModel, predict } from '../../service/model';
 import { Kana, SimplifiedMaterialBlock } from '../../store/interfaces';
@@ -29,9 +29,6 @@ const Writer: React.FC<Props> = ({
   let canvas: HTMLCanvasElement | null;
   let context: CanvasRenderingContext2D | null;
   let left: number; let top: number;
-
-  const blackColor = '#000000';
-  const whiteColor = '#FFFFFF';
 
   const materialName = selectedMaterial?.name ?? 'katakana';
 

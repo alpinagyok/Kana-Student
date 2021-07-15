@@ -8,10 +8,12 @@ function Test(): JSX.Element {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   return (
     <div>
       <h1>{user?.email}</h1>
+      {error !== '' && (<h1>{error}</h1>)}
       <input
         type="text"
         value={email}
@@ -26,8 +28,9 @@ function Test(): JSX.Element {
       />
       <button
         type="button"
-        onClick={() => {
-          signIn(email, password);
+        onClick={async () => {
+          const err = await signIn(email, password);
+          setError(err);
         }}
       >
         login

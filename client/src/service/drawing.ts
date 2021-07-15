@@ -4,7 +4,7 @@ let brushX = 0; let brushY = 0;
 const smoothnessRadius = 40;
 
 const blackColor = '#000000';
-const whiteColor = '#FFFFFF';
+export const whiteColor = '#FFFFFF';
 
 export const beginDrawing = (
   context: CanvasRenderingContext2D | null,

@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { QueryDocumentSnapshot } from 'firebase-functions/lib/providers/firestore';
 import { db } from './config/firebase';
 
@@ -18,7 +18,7 @@ interface MaterialBlock {
   }[];
 }
 
-const getAllMaterials = async (req: undefined, res: Response): Promise<Response> => {
+const getAllMaterials = async (req: Request, res: Response): Promise<Response> => {
   try {
     const allMaterials: MaterialBlock[] = [];
     const querySnapshot = await db.collection('materials').get();
