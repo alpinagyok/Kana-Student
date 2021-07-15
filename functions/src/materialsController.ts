@@ -3,8 +3,8 @@ import { QueryDocumentSnapshot } from 'firebase-functions/lib/providers/firestor
 import { db } from './config/firebase';
 
 interface Kana {
-japName: string;
-romName: string;
+  japName: string;
+  romName: string;
 }
 
 type MaterialName = 'hiragana' | 'katakana'

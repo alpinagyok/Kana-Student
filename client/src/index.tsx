@@ -14,22 +14,25 @@ import Footer from './components/Footer';
 import Stepper from './pages/learn/Stepper';
 import Lesson from './pages/lesson';
 import Achievements from './pages/achievements';
+import { AuthProvider } from './contexts/authContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Provider store={store}>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={App} />
-          <Route exact path="/learn" component={Stepper} />
-          <Route exact path="/lesson" component={Lesson} />
-          <Route exact path="/achievements" component={Achievements} />
-          <Route exact path="/test" component={Test} />
-          <Route path="/404" component={Test} />
-          <Redirect to="/404" />
-        </Switch>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={App} />
+            <Route exact path="/learn" component={Stepper} />
+            <Route exact path="/lesson" component={Lesson} />
+            <Route exact path="/achievements" component={Achievements} />
+            <Route exact path="/test" component={Test} />
+            <Route path="/404" component={Test} />
+            <Redirect to="/404" />
+          </Switch>
+          <Footer />
+        </AuthProvider>
       </Provider>
     </Router>
   </React.StrictMode>,
