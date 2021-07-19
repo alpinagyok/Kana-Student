@@ -1,13 +1,18 @@
 import { Response } from 'express';
-import getAllAchievements from './achievementsController';
+import { getAllAchievements, getUsersAchievements } from './achievementsController';
 import getAllMaterials from './materialsController';
-import { createUser } from './usersController';
+import { checkIfAuthenticated, createUser } from './usersController';
 import validateUsers from './validation/users';
 
 const functions = require('firebase-functions');
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
+
+// Enable pre-flight request
+app.use(cors());
+app.options('*', cors());
 
 app.get('/hello', (req: undefined, res: Response) => {
   res.send('hello');
@@ -16,6 +21,7 @@ app.get('/hello', (req: undefined, res: Response) => {
 app.get('/materials', getAllMaterials);
 
 app.get('/achievements', getAllAchievements);
+app.get('/achievements/userSpecific', checkIfAuthenticated, getUsersAchievements);
 
 app.post('/users/create', validateUsers('createUser'), createUser);
 

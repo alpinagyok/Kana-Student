@@ -1,8 +1,8 @@
 import { Response, Request, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
-import { admin } from './config/firebase';
+import { admin, db } from './config/firebase';
 
-interface RequestCustom extends Request {
+export interface RequestCustom extends Request {
   authToken: string;
   authId: string;
 }
@@ -34,7 +34,11 @@ export const createUser = async (
       password,
       displayName,
     });
-    return res.status(200).json(user);
+    // Add default achievement for registration
+    await db.collection('users').doc(user.uid).set({
+      achievements: [1],
+    });
+    return res.status(200).json({ achievements: [1] });
   } catch (error) { return res.status(500).json(error); }
 };
 

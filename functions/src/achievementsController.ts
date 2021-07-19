@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { QueryDocumentSnapshot } from 'firebase-functions/lib/providers/firestore';
 import { db } from './config/firebase';
+import { RequestCustom } from './usersController';
 
 interface Achievement {
   id: string;
@@ -9,7 +10,7 @@ interface Achievement {
   icon: string;
 }
 
-const getAllAchievements = async (req: undefined, res: Response): Promise<Response> => {
+export const getAllAchievements = async (req: undefined, res: Response): Promise<Response> => {
   try {
     const allAchievements: Achievement[] = [];
     const querySnapshot = await db.collection('achievements').get();
@@ -20,4 +21,13 @@ const getAllAchievements = async (req: undefined, res: Response): Promise<Respon
   } catch (error) { return res.status(500).json(error.message); }
 };
 
-export default getAllAchievements;
+export const getUsersAchievements = async (
+  req: RequestCustom,
+  res: Response,
+): Promise<Response> => {
+  try {
+    const loggedInUser = db.collection('users').doc(req.authId);
+    const achievements = (await loggedInUser.get()).data()?.achievements ?? [];
+    return res.status(200).json(achievements);
+  } catch (error) { return res.status(500).json(error.message); }
+};
