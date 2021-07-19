@@ -71,7 +71,7 @@ const Lesson: React.FC = () => {
       )}
       <Modal
         isOpen={modalIsOpen}
-        contentLabel="Example Modal"
+        contentLabel="Choose correct kana"
       >
         <button type="button" onClick={() => setIsOpen(false)}>close</button>
         {correctKana && chosentKana && (
