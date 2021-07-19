@@ -23,15 +23,13 @@ export const signIn = async (email: string, password: string): Promise<AuthRespo
 export const signUp = async (
   email: string,
   password: string,
-  firstName: string,
-  lastName: string,
+  displayName: string,
 ): Promise<AuthResponse> => {
   try {
     await axios.post<firebase.User>(`${API_ENDPOINT}/users/create`, new URLSearchParams({
       email,
       password,
-      firstName,
-      lastName,
+      displayName,
     }));
     return { type: SUCCEEDED, message: '' };
   } catch (err) {

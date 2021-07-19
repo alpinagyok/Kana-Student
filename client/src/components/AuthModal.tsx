@@ -14,15 +14,13 @@ interface Props {
 const AuthModal: React.FC<Props> = ({ openedModal, setOpenedModal }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [resStatus, setResStatus] = useState<AuthResponse>({ type: IDLE, message: '' });
 
   const closeModal = () => {
     setEmail('');
     setPassword('');
-    setFirstName('');
-    setLastName('');
+    setDisplayName('');
     setResStatus({ type: IDLE, message: '' });
     setOpenedModal(undefined);
   };
@@ -36,7 +34,7 @@ const AuthModal: React.FC<Props> = ({ openedModal, setOpenedModal }) => {
 
   const handleSignUp = async () => {
     setResStatus({ type: LOADING, message: 'Signing up...' });
-    const res = await signUp(email, password, firstName, lastName);
+    const res = await signUp(email, password, displayName);
     setResStatus(res);
     if (res.type === SUCCEEDED) {
       handleLogin();
@@ -81,20 +79,12 @@ const AuthModal: React.FC<Props> = ({ openedModal, setOpenedModal }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
         {openedModal === SIGNUP && (
-          <>
-            <input
-              type="text"
-              value={firstName}
-              placeholder="firstName"
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-            <input
-              type="text"
-              value={lastName}
-              placeholder="lastName"
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </>
+          <input
+            type="text"
+            value={displayName}
+            placeholder="displayName"
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
         )}
         <button
           type="submit"

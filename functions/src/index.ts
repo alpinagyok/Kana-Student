@@ -2,6 +2,7 @@ import { Response } from 'express';
 import getAllAchievements from './achievementsController';
 import getAllMaterials from './materialsController';
 import { createUser } from './usersController';
+import validateUsers from './validation/users';
 
 const functions = require('firebase-functions');
 const express = require('express');
@@ -16,7 +17,7 @@ app.get('/materials', getAllMaterials);
 
 app.get('/achievements', getAllAchievements);
 
-app.post('/users/create', createUser);
+app.post('/users/create', validateUsers('createUser'), createUser);
 
 const main = express();
 main.use('/api', app);

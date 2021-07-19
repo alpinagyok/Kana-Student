@@ -1,4 +1,5 @@
 import { Response, Request, NextFunction } from 'express';
+import { validationResult } from 'express-validator';
 import { admin } from './config/firebase';
 
 interface RequestCustom extends Request {
@@ -9,8 +10,7 @@ interface RequestCustom extends Request {
 type UserReg = {
   email: string,
   password: string,
-  firstName: string,
-  lastName: string,
+  displayName: string,
 }
 
 export const createUser = async (
@@ -21,14 +21,18 @@ export const createUser = async (
     const {
       email,
       password,
-      firstName,
-      lastName,
+      displayName,
     } = req.body;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array()[0].msg);
+    }
 
     const user = await admin.auth().createUser({
       email,
       password,
-      displayName: `${firstName} ${lastName}`,
+      displayName,
     });
     return res.status(200).json(user);
   } catch (error) { return res.status(500).json(error); }
