@@ -10,7 +10,7 @@ export const SIGNUP = 'signup' as const;
 export type AuthModalType = typeof LOGIN | typeof SIGNUP | undefined
 
 const Header: React.FC = () => {
-  const user = useAuth();
+  const { user, userAchievements, addUserAchievements } = useAuth();
   const [openedModal, setOpenedModal] = useState<AuthModalType>();
 
   useEffect(() => {
@@ -23,10 +23,12 @@ const Header: React.FC = () => {
       <Link to="/learn">learn</Link>
       <Link to="/lesson">lesson</Link>
       <Link to="/achievements">achievements</Link>
-      {user ? (
+      {user && addUserAchievements ? (
         <>
           <p>{user.email}</p>
+          <p>{userAchievements.join(',')}</p>
           <button type="button" onClick={() => signOut()}>logout</button>
+          <button type="button" onClick={() => addUserAchievements([7])}>achhhh</button>
         </>
       ) : (
         <>
