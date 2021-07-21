@@ -3,19 +3,94 @@ import { QueryDocumentSnapshot } from 'firebase-functions/lib/providers/firestor
 import { db } from './config/firebase';
 import { RequestCustom } from './usersController';
 
-interface Achievement {
+interface ShortAchievement {
   id: string;
+  order: number;
   name: string;
   description: string;
   icon: string;
 }
 
-export const getAllAchievements = async (req: undefined, res: Response): Promise<Response> => {
+interface Achievement extends ShortAchievement {
+  condition: {
+    materialId?: string;
+    lessonType?: 'writer' | 'guesser';
+    successStreak?: number;
+    totalAnswers?: number;
+  }
+}
+
+interface Condition {
+  materialId: string;
+  lessonType: 'writer' | 'guesser';
+  successStreak: number;
+  totalAnswers: number;
+}
+
+export const checkForAndAddUsersAchievments = async (
+  req: RequestCustom<Record<string, never>, Record<string, never>, Condition>,
+  res: Response,
+): Promise<Response> => {
   try {
+    const { body } = req;
+
     const allAchievements: Achievement[] = [];
     const querySnapshot = await db.collection('achievements').get();
     querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
       allAchievements.push(doc.data() as Achievement);
+    });
+
+    // Filter current user's achievemnts
+    const loggedInUser = db.collection('users').doc(req.authId);
+    const gottenAchievementIDs = (await loggedInUser.get()).data()?.achievements ?? [];
+    const achievements = allAchievements.filter((achievement) => (
+      !gottenAchievementIDs.includes(achievement.id)
+    ));
+
+    // Filter the achievements that match the request
+    // If smt is undefined in achievement, it doesn't matter
+    const newAchievementIDs = achievements.filter(
+      (achievement) => {
+        const {
+          materialId, lessonType, successStreak, totalAnswers,
+        } = achievement.condition;
+
+        return (materialId === undefined || body.materialId === materialId)
+          && (lessonType === undefined || body.lessonType === lessonType)
+          && (successStreak === undefined || body.successStreak >= successStreak)
+          && (totalAnswers === undefined || body.totalAnswers >= totalAnswers);
+      },
+    ).map((achievement) => achievement.id);
+
+    // Save new achievements to the user
+    await loggedInUser.set({
+      achievements: [...gottenAchievementIDs, ...newAchievementIDs],
+    });
+
+    return res.status(200).json(newAchievementIDs);
+  } catch (error) { return res.status(500).json(error.message); }
+};
+
+export const getAllAchievements = async (req: undefined, res: Response): Promise<Response> => {
+  try {
+    const allAchievements: ShortAchievement[] = [];
+    const querySnapshot = await db.collection('achievements').get();
+    querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+      const {
+        id,
+        order,
+        name,
+        description,
+        icon,
+      } = (doc.data() as Achievement);
+
+      allAchievements.push({
+        id,
+        order,
+        name,
+        description,
+        icon,
+      });
     });
     return res.status(200).json(allAchievements);
   } catch (error) { return res.status(500).json(error.message); }

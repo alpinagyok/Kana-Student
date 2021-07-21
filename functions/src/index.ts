@@ -1,5 +1,7 @@
 import { Response } from 'express';
-import { getAllAchievements, getUsersAchievements } from './achievementsController';
+import {
+  checkForAndAddUsersAchievments, getAllAchievements, getUsersAchievements,
+} from './achievementsController';
 import getAllMaterials from './materialsController';
 import { checkIfAuthenticated, createUser } from './usersController';
 import validateUsers from './validation/users';
@@ -21,6 +23,7 @@ app.get('/hello', (req: undefined, res: Response) => {
 app.get('/materials', getAllMaterials);
 
 app.get('/achievements', getAllAchievements);
+app.post('/achievements/check', checkIfAuthenticated, checkForAndAddUsersAchievments);
 app.get('/achievements/userSpecific', checkIfAuthenticated, getUsersAchievements);
 
 app.post('/users/create', validateUsers('createUser'), createUser);

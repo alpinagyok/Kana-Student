@@ -2,7 +2,8 @@ import { Response, Request, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 import { admin, db } from './config/firebase';
 
-export interface RequestCustom extends Request {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+export interface RequestCustom<P = any, ResBody = any, ReqBody = any> extends Request {
   authToken: string;
   authId: string;
 }
@@ -36,7 +37,7 @@ export const createUser = async (
     });
     // Add default achievement for registration
     await db.collection('users').doc(user.uid).set({
-      achievements: [1],
+      achievements: ['p0uprM2NDTzZ5J95nvxq'],
     });
     return res.status(200).json({ achievements: [1] });
   } catch (error) { return res.status(500).json(error); }
