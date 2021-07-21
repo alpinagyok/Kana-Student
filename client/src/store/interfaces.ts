@@ -32,6 +32,7 @@ export type FetchStatus = typeof IDLE | typeof LOADING | typeof SUCCEEDED | type
 
 export interface Achievement {
   id: string;
+  order: number;
   name: string;
   description: string;
   icon: string;

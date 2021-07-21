@@ -25,6 +25,8 @@ export const addPreparedKanas = createAction<Kana[]>('lesson/addPreparedKanas');
 export const removePreparedKanas = createAction<Kana[]>('lesson/removePreparedKanas');
 export const clearPreparedKanas = createAction('lesson/clearPreparedKanas');
 
+export const setLessonType = createAction<LessonType>('lesson/setLessonType');
+
 const slice = createSlice({
   name: 'lesson',
   initialState,
@@ -41,9 +43,6 @@ const slice = createSlice({
       if (payload) state.successStreak += 1;
       else state.successStreak = 0;
     },
-    setLessonType: (state, { payload }: PayloadAction<LessonType>) => {
-      state.lessonType = payload;
-    },
     shufflePreparedKanas: (state) => {
       const { preparedKanas } = state;
       // shuffle prepped kanas
@@ -58,6 +57,9 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => builder
+    .addCase(setLessonType, (state, { payload }) => {
+      state.lessonType = payload;
+    })
     .addCase(removePreparedKanas, (state, { payload }) => {
       state.preparedKanas = state.preparedKanas.filter((preparedKana) => (
         !payload.some((payloadKana) => payloadKana.romName === preparedKana.romName)));
@@ -80,7 +82,11 @@ const slice = createSlice({
       state.preparedKanas = [];
     })
     .addMatcher(
-      isAnyOf(removePreparedKanas, setPreparedKanas, addPreparedKanas, clearPreparedKanas),
+      isAnyOf(
+        removePreparedKanas, setPreparedKanas,
+        addPreparedKanas, clearPreparedKanas,
+        setLessonType,
+      ),
       (state) => {
         state.currentKana = undefined;
         state.successStreak = 0;
@@ -91,7 +97,6 @@ const slice = createSlice({
 
 export const {
   setMaterialBlock,
-  setLessonType,
   setStreak,
   shufflePreparedKanas,
   setCurrentKana,

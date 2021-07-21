@@ -5,20 +5,31 @@ import Modal from 'react-modal';
 import { Kana, WRITER_LESSON } from '../../store/interfaces';
 import { setStreak, shufflePreparedKanas } from '../../store/lesson/reducer';
 import {
-  getCurrentKana, getLessonType, getPreparedKanas, getSelectedMaterialsBlock,
+  getCurrentKana,
+  getLessonType,
+  getPreparedKanas,
+  getSelectedMaterialsBlock,
+  getSuccessStreak,
+  getTotalAnswers,
 } from '../../store/lesson/selectors';
 import Guesser from './Guesser';
 import LessonQuestion from './LessonQuestion';
 import Writer from './Writer';
+import { useAuth } from '../../contexts/authContext';
+import reactToKanaChoice from '../../service/achievements';
 
 const Lesson: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { user, addUserAchievements } = useAuth();
 
   const selectedMaterial = useSelector(getSelectedMaterialsBlock);
   const preparedKanas = useSelector(getPreparedKanas);
   const lessonType = useSelector(getLessonType);
   const currentKana = useSelector(getCurrentKana);
+
+  const successStreak = useSelector(getSuccessStreak);
+  const totalAnswers = useSelector(getTotalAnswers);
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [correctKana, setCorrectKana] = useState<Kana>();
@@ -33,6 +44,19 @@ const Lesson: React.FC = () => {
 
     Modal.setAppElement('body');
   }, []);
+
+  // Check for new achievements
+  // done in useEffect and not in handleKanachoice to avoid dispatch lag
+  useEffect(() => {
+    if (user) {
+      reactToKanaChoice(
+        selectedMaterial?.id ?? '',
+        lessonType ?? WRITER_LESSON,
+        successStreak, totalAnswers,
+        addUserAchievements,
+      );
+    }
+  }, [totalAnswers]);
 
   const handleKanaChoice = (
     chosenKana: Kana,
