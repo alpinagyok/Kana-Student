@@ -1,4 +1,3 @@
-import { Response } from 'express';
 import {
   checkForAndAddUsersAchievments, getAllAchievements, getUsersAchievements,
 } from './achievementsController';
@@ -15,10 +14,6 @@ const app = express();
 // Enable pre-flight request
 app.use(cors());
 app.options('*', cors());
-
-app.get('/hello', (req: undefined, res: Response) => {
-  res.send('hello');
-});
 
 app.get('/materials', getAllMaterials);
 
