@@ -1,6 +1,7 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import { AuthResponse, signIn, signUp } from '../api/auth';
+import { signIn, signUp } from '../api/auth';
+import { IResponse } from '../api/interfaces';
 import {
   FAILED, IDLE, LOADING, SUCCEEDED,
 } from '../store/interfaces';
@@ -15,7 +16,7 @@ const AuthModal: React.FC<Props> = ({ openedModal, setOpenedModal }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
-  const [resStatus, setResStatus] = useState<AuthResponse>({ type: IDLE, message: '' });
+  const [resStatus, setResStatus] = useState<IResponse>({ type: IDLE, message: '' });
 
   const closeModal = () => {
     setEmail('');

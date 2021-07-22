@@ -2,25 +2,31 @@ import {
   browser, LayersModel, loadLayersModel, Tensor,
 } from '@tensorflow/tfjs';
 import models from './modelLabels';
-import { Kana } from '../store/interfaces';
+import {
+  FAILED, Kana, LOADING, SUCCEEDED,
+} from '../store/interfaces';
+import { IResponse } from '../api/interfaces';
 
 const tensorSize = 48;
 
 export const loadModel = async (
   materialName: string,
   setModel: React.Dispatch<React.SetStateAction<LayersModel | undefined>>,
+  setResStatus: React.Dispatch<React.SetStateAction<IResponse>>,
 ): Promise<void> => {
   // TODO: check the database properly instead of try-catch monstrosity
+  setResStatus({ type: LOADING, message: 'Loading model...' });
   try {
     setModel(await loadLayersModel(`indexeddb://${materialName}-model`));
-  } catch (e) {
+    setResStatus({ type: SUCCEEDED, message: '' });
+  } catch {
     try {
       const loadedModel = await loadLayersModel(`https://firebasestorage.googleapis.com/v0/b/kana-student.appspot.com/o/${materialName}%2Fmodel.json?alt=media`);
       await loadedModel.save(`indexeddb://${materialName}-model`);
       setModel(loadedModel);
-    } catch (ee) {
-      // eslint-disable-next-line no-console
-      console.log(ee);
+      setResStatus({ type: SUCCEEDED, message: '' });
+    } catch {
+      setResStatus({ type: FAILED, message: 'Failed to load model' });
     }
   }
 };

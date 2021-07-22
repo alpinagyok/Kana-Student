@@ -5,11 +5,14 @@ import {
 import React, {
   useEffect, useRef, useState,
 } from 'react';
+import { IResponse } from '../../api/interfaces';
 import {
   beginDrawing, draw, endDrawing, clearCanvas, whiteColor,
 } from '../../service/drawing';
 import { loadModel, predict } from '../../service/model';
-import { Kana, SimplifiedMaterialBlock } from '../../store/interfaces';
+import {
+  FAILED, IDLE, Kana, LOADING, SimplifiedMaterialBlock,
+} from '../../store/interfaces';
 
 interface Props {
   randomKanas: Kana[];
@@ -33,6 +36,7 @@ const Writer: React.FC<Props> = ({
   const materialName = selectedMaterial?.name ?? 'katakana';
 
   const [model, setModel] = useState<LayersModel>();
+  const [resStatus, setResStatus] = useState<IResponse>({ type: IDLE, message: '' });
 
   useEffect(() => {
     canvas = canvasRef.current;
@@ -44,7 +48,7 @@ const Writer: React.FC<Props> = ({
         context.fillRect(0, 0, canvas.width, canvas.height);
       }
     }
-    if (!model) { loadModel(materialName, setModel); }
+    if (!model) { loadModel(materialName, setModel, setResStatus); }
   }, [model, randomKanas, kanaToGuess]);
 
   const handlePredict = async () => {
@@ -54,7 +58,15 @@ const Writer: React.FC<Props> = ({
 
   return (
     <div>
-      {model ? (
+      {resStatus.type === FAILED && (<h1>{resStatus.message}</h1>)}
+      {resStatus.type === LOADING && (
+      <h1>
+        loading:
+        {' '}
+        {resStatus.message}
+      </h1>
+      )}
+      {model && (
         <>
           <div>
             <button type="button" onClick={() => clearCanvas(canvas, context)}>x</button>
@@ -111,8 +123,6 @@ const Writer: React.FC<Props> = ({
             />
           </div>
         </>
-      ) : (
-        <h1>loading</h1>
       )}
     </div>
   );

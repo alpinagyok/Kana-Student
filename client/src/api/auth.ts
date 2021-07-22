@@ -1,15 +1,11 @@
 import axios from 'axios';
 import firebase from 'firebase/app';
 import { auth } from '../firebase';
-import { FAILED, FetchStatus, SUCCEEDED } from '../store/interfaces';
+import { FAILED, SUCCEEDED } from '../store/interfaces';
 import API_ENDPOINT from './constants';
+import { IResponse } from './interfaces';
 
-export type AuthResponse = {
-  type: FetchStatus
-  message: string;
-}
-
-export const signIn = async (email: string, password: string): Promise<AuthResponse> => {
+export const signIn = async (email: string, password: string): Promise<IResponse> => {
   try {
     await auth.signInWithEmailAndPassword(
       email, password,
@@ -24,7 +20,7 @@ export const signUp = async (
   email: string,
   password: string,
   displayName: string,
-): Promise<AuthResponse> => {
+): Promise<IResponse> => {
   try {
     await axios.post<firebase.User>(`${API_ENDPOINT}/users/create`, new URLSearchParams({
       email,
