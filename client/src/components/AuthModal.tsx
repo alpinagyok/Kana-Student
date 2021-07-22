@@ -5,6 +5,8 @@ import { IResponse } from '../api/interfaces';
 import {
   FAILED, IDLE, LOADING, SUCCEEDED,
 } from '../store/interfaces';
+import Error from './common/Error';
+import Loading from './common/Loading';
 import { AuthModalType, LOGIN, SIGNUP } from './Header';
 
 interface Props {
@@ -59,14 +61,8 @@ const AuthModal: React.FC<Props> = ({ openedModal, setOpenedModal }) => {
     >
       <button type="button" onClick={closeModal}>close</button>
       <form onSubmit={handleAuth}>
-        {resStatus.type === FAILED && (<h1>{resStatus.message}</h1>)}
-        {resStatus.type === LOADING && (
-          <h1>
-            loading:
-            {' '}
-            {resStatus.message}
-          </h1>
-        )}
+        {resStatus.type === FAILED && (<Error message={resStatus.message} />)}
+        {resStatus.type === LOADING && (<Loading message={resStatus.message} />)}
         <input
           type="text"
           value={email}

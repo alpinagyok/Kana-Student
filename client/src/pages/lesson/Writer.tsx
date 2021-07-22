@@ -6,6 +6,8 @@ import React, {
   useEffect, useRef, useState,
 } from 'react';
 import { IResponse } from '../../api/interfaces';
+import Error from '../../components/common/Error';
+import Loading from '../../components/common/Loading';
 import {
   beginDrawing, draw, endDrawing, clearCanvas, whiteColor,
 } from '../../service/drawing';
@@ -58,14 +60,8 @@ const Writer: React.FC<Props> = ({
 
   return (
     <div>
-      {resStatus.type === FAILED && (<h1>{resStatus.message}</h1>)}
-      {resStatus.type === LOADING && (
-      <h1>
-        loading:
-        {' '}
-        {resStatus.message}
-      </h1>
-      )}
+      {resStatus.type === FAILED && (<Error message={resStatus.message} />)}
+      {resStatus.type === LOADING && (<Loading message={resStatus.message} />)}
       {model && (
         <>
           <div>

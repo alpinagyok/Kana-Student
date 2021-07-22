@@ -4,6 +4,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Error from '../../components/common/Error';
+import Loading from '../../components/common/Loading';
 import {
   FAILED, IDLE, LOADING, SUCCEEDED,
 } from '../../store/interfaces';
@@ -34,7 +36,7 @@ const LessonStarter: React.FC<Props> = ({ incrementStep }) => {
   let content;
   if (materialsStatus === LOADING) {
     content = (
-      <div><h1>Loading</h1></div>
+      <Loading message="Loading materials" />
     );
   } else if (materialsStatus === SUCCEEDED) {
     content = (
@@ -81,7 +83,7 @@ const LessonStarter: React.FC<Props> = ({ incrementStep }) => {
     );
   } else if (materialsStatus === FAILED) {
     content = (
-      <div><h1>Failed</h1></div>
+      <Error message="Failed to load materials" />
     );
   }
 
