@@ -50,8 +50,8 @@ const Writer: React.FC<Props> = ({
         context.fillRect(0, 0, canvas.width, canvas.height);
       }
     }
-    if (!model) { loadModel(materialName, setModel, setResStatus); }
-  }, [model, resStatus, randomKanas, kanaToGuess]);
+    if (resStatus.type === IDLE) { loadModel(materialName, setModel, setResStatus); }
+  }, [resStatus, randomKanas]);
 
   const handlePredict = async () => {
     const predictedKanaJapName = await predict(model, canvas, context, materialName);
