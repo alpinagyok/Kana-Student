@@ -5,7 +5,7 @@ export const LessonStarterContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 2em;
+  padding-bottom: 2em;
 
 `;
 
@@ -21,7 +21,7 @@ export const SelectableKanasContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   flex-basis: 100%;
-  margin-bottom: 2.5em;
+  padding-bottom: 2.5em;
 `;
 
 export const PaperMaterial = styled(Paper)<{$selected?: boolean}>`
@@ -33,6 +33,10 @@ export const PaperMaterial = styled(Paper)<{$selected?: boolean}>`
     && css`
       color: #1cb0f6;
   `}
+`;
+
+export const PaperLessonType = styled(PaperMaterial)`
+  text-transform: uppercase;
 `;
 
 export const PaperKana = styled(Paper)<{$selected?: boolean}>`
@@ -59,6 +63,16 @@ export const KanaPapersBlock = styled.div`
   display: flex;
   justify-content: space-between;
   flex-grow: 1;
+`;
+
+export const StepperButton = styled(Button)`
+  margin: 0.5em;
+`;
+
+export const StepperButtonsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2em;
 `;
 
 export const AddRemoveButton = styled(Button)`

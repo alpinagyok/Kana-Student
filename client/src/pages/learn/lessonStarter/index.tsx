@@ -1,4 +1,4 @@
-import { Button, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Error from '../../../components/common/Error';
@@ -14,7 +14,7 @@ import { fetchMaterials } from '../../../store/materials/reducer';
 import { getMaterials, getMaterialsStatus } from '../../../store/materials/selectors';
 import {
   KanaRowsBlock,
-  LessonStarterContent, MaterialsContainer, PaperMaterial, SelectableKanasContainer,
+  LessonStarterContent, MaterialsContainer, PaperMaterial, SelectableKanasContainer, StepperButton,
 } from '../styles';
 import KanaRowComp from './KanaRowComp';
 
@@ -92,9 +92,9 @@ const LessonStarter: React.FC<Props> = ({ incrementStep }) => {
         )}
 
         {preparedKanas && preparedKanas?.length > 3 && selectedMaterial && (
-          <Button onClick={() => incrementStep()} size="large" variant="outlined" color="primary">
+          <StepperButton onClick={() => incrementStep()} size="large" variant="outlined" color="primary">
             Next
-          </Button>
+          </StepperButton>
         )}
       </>
     );
