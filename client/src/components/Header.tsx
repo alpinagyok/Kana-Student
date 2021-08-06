@@ -69,29 +69,36 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <Container style={{ display: 'flex', justifyContent: 'space-around', padding: '1.3em 0' }} maxWidth="lg">
-        <StyledNavItem to="/" $selected={currentPage === ''}>
-          <StyledIcon as={HomeIcon} />
-          <StyledSpan>Kana Student</StyledSpan>
-        </StyledNavItem>
-        <StyledNavItem to="/learn" $selected={currentPage === 'learn'}>
-          <StyledIcon as={LearnIcon} />
-          <StyledSpan>learn</StyledSpan>
-        </StyledNavItem>
-        <StyledNavItem to="/lesson" $selected={currentPage === 'lesson'}>
-          <StyledIcon as={LessonIcon} />
-          <StyledSpan>lesson</StyledSpan>
-        </StyledNavItem>
-        <StyledNavItem to="/achievements" $selected={currentPage === 'achievements'} $isGrowing>
-          <StyledIcon as={AchievementsIcon} />
-          <StyledSpan>achievements</StyledSpan>
-        </StyledNavItem>
-        <StyledNavItem as="div" onClick={(e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget)}>
-          <StyledIcon as={AccountIcon} />
-          <StyledSpan>{user ? user.displayName : 'account'}</StyledSpan>
-        </StyledNavItem>
-        {accountMenu}
-      </Container>
+      <div style={{ borderBottom: '1px solid gray' }}>
+        <Container
+          style={{
+            display: 'flex', justifyContent: 'space-around', padding: '1.3em 0',
+          }}
+          maxWidth="lg"
+        >
+          <StyledNavItem to="/" $selected={currentPage === ''}>
+            <StyledIcon as={HomeIcon} />
+            <StyledSpan>Kana Student</StyledSpan>
+          </StyledNavItem>
+          <StyledNavItem to="/learn" $selected={currentPage === 'learn'}>
+            <StyledIcon as={LearnIcon} />
+            <StyledSpan>learn</StyledSpan>
+          </StyledNavItem>
+          <StyledNavItem to="/lesson" $selected={currentPage === 'lesson'}>
+            <StyledIcon as={LessonIcon} />
+            <StyledSpan>lesson</StyledSpan>
+          </StyledNavItem>
+          <StyledNavItem to="/achievements" $selected={currentPage === 'achievements'} $isGrowing>
+            <StyledIcon as={AchievementsIcon} />
+            <StyledSpan>achievements</StyledSpan>
+          </StyledNavItem>
+          <StyledNavItem as="div" onClick={(e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget)}>
+            <StyledIcon as={AccountIcon} />
+            <StyledSpan>{user ? user.displayName : 'account'}</StyledSpan>
+          </StyledNavItem>
+          {accountMenu}
+        </Container>
+      </div>
       <AuthModal openedModal={openedModal} setOpenedModal={setOpenedModal} />
     </>
   );

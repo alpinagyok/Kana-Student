@@ -26,6 +26,7 @@ export const StyledNavItem = styled(Link)<{$isGrowing?: boolean, $selected?: boo
     && css`
       color: #1cb0f6;
   `}
+  transition: all 0.5s ease;
   font-size: 1.2em;
   padding-left: clamp(0em, 1.5vw, 1em);
   padding-right: clamp(0em, 1.5vw, 1em);

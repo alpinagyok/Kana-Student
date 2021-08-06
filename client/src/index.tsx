@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import {
   Route, BrowserRouter as Router, Switch, Redirect,
 } from 'react-router-dom';
+import { Container } from '@material-ui/core';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
 import Test from './Test';
@@ -21,15 +22,17 @@ ReactDOM.render(
     <Provider store={store}>
       <AuthProvider>
         <Header />
-        <Switch>
-          <Route exact path="/" component={Test} />
-          <Route exact path="/learn" component={Stepper} />
-          <Route exact path="/lesson" component={Lesson} />
-          <Route exact path="/achievements" component={Achievements} />
-          <Route exact path="/test" component={Test} />
-          <Route path="/404" component={Test} />
-          <Redirect to="/404" />
-        </Switch>
+        <Container maxWidth="lg">
+          <Switch>
+            <Route exact path="/" component={Test} />
+            <Route exact path="/learn" component={Stepper} />
+            <Route exact path="/lesson" component={Lesson} />
+            <Route exact path="/achievements" component={Achievements} />
+            <Route exact path="/test" component={Test} />
+            <Route path="/404" component={Test} />
+            <Redirect to="/404" />
+          </Switch>
+        </Container>
         <Footer />
       </AuthProvider>
     </Provider>

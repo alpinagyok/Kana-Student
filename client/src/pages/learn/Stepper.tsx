@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LessonStarter from './LessonStarter';
+import LessonStarter from './lessonStarter';
 import LessonTypeChooser from './LessonTypeChooser';
 
 const Stepper: React.FC = () => {
