@@ -11,6 +11,7 @@ export const LessonStarterContent = styled.div`
 
 export const MaterialsContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-basis: 100%;
   justify-content: center;
   margin: 2em 0;
@@ -28,7 +29,7 @@ export const PaperMaterial = styled(Paper)<{$selected?: boolean}>`
   padding: 2em;
   margin: clamp(0em, 1.5vw, 1em);
   cursor: pointer;
-  transition: all 0.5s ease;
+  transition: color 0.5s ease, box-shadow 0.5s ease;
   ${({ $selected }) => $selected
     && css`
       color: #1cb0f6;

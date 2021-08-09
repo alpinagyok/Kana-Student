@@ -24,6 +24,7 @@ const LessonTypeChooser: React.FC<Props> = ({ decrementStep }) => {
       <MaterialsContainer>
         {[GUESSER_LESSON, WRITER_LESSON].map((lesson) => (
           <PaperLessonType
+            key={lesson}
             elevation={lessonType === lesson ? 10 : 3}
             $selected={lessonType === lesson}
             onClick={() => {
