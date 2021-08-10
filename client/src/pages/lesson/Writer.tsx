@@ -15,6 +15,7 @@ import { loadModel, predict } from '../../service/model';
 import {
   FAILED, IDLE, Kana, LOADING, SimplifiedMaterialBlock,
 } from '../../store/interfaces';
+import { LessonCont } from './styles';
 
 interface Props {
   randomKanas: Kana[];
@@ -30,6 +31,7 @@ const Writer: React.FC<Props> = ({
   randomKanas, kanaToGuess, handleKanaChoice, selectedMaterial,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const writerContRef = useRef<HTMLDivElement>(null);
 
   let canvas: HTMLCanvasElement | null;
   let context: CanvasRenderingContext2D | null;
@@ -40,8 +42,13 @@ const Writer: React.FC<Props> = ({
   const [model, setModel] = useState<LayersModel>();
   const [resStatus, setResStatus] = useState<IResponse>({ type: IDLE, message: '' });
 
+  const canvasSize = 500;
+  const canvasBorder = 50;
+
   useEffect(() => {
     canvas = canvasRef.current;
+    const writerCont = writerContRef.current;
+
     if (canvas) {
       context = canvas.getContext('2d');
       ({ left, top } = canvas.getBoundingClientRect());
@@ -51,6 +58,32 @@ const Writer: React.FC<Props> = ({
       }
     }
     if (resStatus.type === IDLE) { loadModel(materialName, setModel, setResStatus); }
+
+    const handleResize = () => {
+      if (canvas) {
+        ({ left, top } = canvas.getBoundingClientRect());
+      }
+      if (context && writerCont) {
+        const writerContWidth = writerCont.getBoundingClientRect().width;
+        context.canvas.width = writerContWidth;
+        context.canvas.height = writerContWidth;
+
+        (writerCont.querySelector('#canvas-border') as HTMLElement).style.width = `${writerContWidth}px`;
+        (writerCont.querySelector('#canvas-border') as HTMLElement).style.height = `${writerContWidth}px`;
+
+        Array.from((writerCont.getElementsByClassName('canvas-border-line-vert') as HTMLCollectionOf<HTMLElement>)).forEach((line) => {
+          line.style.height = `${writerContWidth}px`;
+        });
+        Array.from((writerCont.getElementsByClassName('canvas-border-line-horiz') as HTMLCollectionOf<HTMLElement>)).forEach((line) => {
+          line.style.width = `${writerContWidth}px`;
+        });
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
   }, [resStatus, randomKanas]);
 
   const handlePredict = async () => {
@@ -59,7 +92,7 @@ const Writer: React.FC<Props> = ({
   };
 
   return (
-    <div>
+    <LessonCont ref={writerContRef}>
       {resStatus.type === FAILED && (<Error message={resStatus.message} />)}
       {resStatus.type === LOADING && (<Loading message={resStatus.message} />)}
       {model && (
@@ -68,12 +101,14 @@ const Writer: React.FC<Props> = ({
             <button type="button" onClick={() => clearCanvas(canvas, context)}>x</button>
             <button type="button" onClick={() => handlePredict()}>predict</button>
           </div>
-          <div style={{
-            position: 'relative',
-            border: '1px solid black',
-            width: '300px',
-            height: '300px',
-          }}
+          <div
+            id="canvas-border"
+            style={{
+              position: 'relative',
+              border: '1px solid black',
+              width: `${canvasSize}px`,
+              height: `${canvasSize}px`,
+            }}
           >
             <canvas
               onMouseDown={(e) => beginDrawing(context, e, left, top)}
@@ -82,45 +117,55 @@ const Writer: React.FC<Props> = ({
               onTouchMove={(e) => draw(context, e, left, top)}
               onMouseUp={() => endDrawing(context)}
               ref={canvasRef}
-              width="300"
-              height="300"
+              width={canvasSize}
+              height={canvasSize}
+            >
+              <h1 style={{ zIndex: 2000, width: '500px', height: '500px' }}>aaaa</h1>
+            </canvas>
+            <div
+              className="canvas-border-line-vert"
+              style={{
+                height: `${canvasSize}px`,
+                position: 'absolute',
+                top: 0,
+                left: `${canvasBorder}px`,
+                borderLeft: '1px black dotted',
+              }}
             />
-            <div style={{
-              height: '300px',
-              position: 'absolute',
-              top: 0,
-              left: '50px',
-              borderLeft: '1px black dotted',
-            }}
+            <div
+              className="canvas-border-line-vert"
+              style={{
+                height: `${canvasSize}px`,
+                position: 'absolute',
+                top: 0,
+                right: `${canvasBorder}px`,
+                borderRight: '1px black dotted',
+              }}
             />
-            <div style={{
-              height: '300px',
-              position: 'absolute',
-              top: 0,
-              left: '250px',
-              borderLeft: '1px black dotted',
-            }}
+            <div
+              className="canvas-border-line-horiz"
+              style={{
+                width: `${canvasSize}px`,
+                position: 'absolute',
+                top: `${canvasBorder}px`,
+                left: 0,
+                borderTop: '1px black dotted',
+              }}
             />
-            <div style={{
-              width: '300px',
-              position: 'absolute',
-              top: '50px',
-              left: 0,
-              borderTop: '1px black dotted',
-            }}
-            />
-            <div style={{
-              width: '300px',
-              position: 'absolute',
-              top: '250px',
-              left: 0,
-              borderTop: '1px black dotted',
-            }}
+            <div
+              className="canvas-border-line-horiz"
+              style={{
+                width: `${canvasSize}px`,
+                position: 'absolute',
+                bottom: `${canvasBorder}px`,
+                left: 0,
+                borderBottom: '1px black dotted',
+              }}
             />
           </div>
         </>
       )}
-    </div>
+    </LessonCont>
   );
 };
 

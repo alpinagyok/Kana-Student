@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 let drawing = false;
 let brushX = 0; let brushY = 0;
-const smoothnessRadius = 40;
+const smoothnessRadius = 0;
 
 const blackColor = '#000000';
 export const whiteColor = '#FFFFFF';

@@ -6,17 +6,18 @@ export const LessonPageContainer = styled.div`
 
   @media (min-width: 761px) {
     display: flex;
+    justify-content: center;
     flex-direction: row-reverse;
   }
 `;
 
 export const QuestionCont = styled.div`
   flex-basis: 40%;
-  margin: 0 0 0 4em;
+  margin-left: clamp(2em, 4vw, 4em);
 
   @media (max-width: 760px) {
     flex-basis: 100%;
-    margin: 0;
+    margin-left: 0;
   }
 `;
 
@@ -29,6 +30,9 @@ export const LessonCont = styled.div`
   
   padding: 2em 0;
   max-width: 500px;
+`;
+
+export const GuesserCont = styled(LessonCont)`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 1em;
