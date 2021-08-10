@@ -1,5 +1,7 @@
 import React from 'react';
-import { Kana } from '../../store/interfaces';
+import { Kana } from '../../../store/interfaces';
+import GuesserKanaCard from './GuesserKanaCard';
+import { LessonCont } from '../styles';
 
 interface Props {
   randomKanas: Kana[];
@@ -11,11 +13,11 @@ interface Props {
 }
 
 const Guesser: React.FC<Props> = ({ randomKanas, kanaToGuess, handleKanaChoice }) => (
-  <div>
+  <LessonCont>
     {randomKanas.map((kana) => (
-      <button key={kana.romName} type="button" onClick={() => handleKanaChoice(kana, kanaToGuess)}>{kana.japName}</button>
+      <GuesserKanaCard handleKanaChoice={handleKanaChoice} kana={kana} kanaToGuess={kanaToGuess} />
     ))}
-  </div>
+  </LessonCont>
 );
 
 export default Guesser;

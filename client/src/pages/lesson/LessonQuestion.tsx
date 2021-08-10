@@ -1,5 +1,6 @@
 import React from 'react';
 import { Kana, SimplifiedMaterialBlock } from '../../store/interfaces';
+import { QuestionCont } from './styles';
 
 interface Props {
   selectedMaterial: SimplifiedMaterialBlock;
@@ -7,7 +8,7 @@ interface Props {
 }
 
 const LessonQuestion: React.FC<Props> = ({ selectedMaterial, kanaToGuess }) => (
-  <div>
+  <QuestionCont>
     <h1>
       This is tab
       {' '}
@@ -18,7 +19,7 @@ const LessonQuestion: React.FC<Props> = ({ selectedMaterial, kanaToGuess }) => (
       {' '}
       {kanaToGuess.romName}
     </h1>
-  </div>
+  </QuestionCont>
 );
 
 export default LessonQuestion;

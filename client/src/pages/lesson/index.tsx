@@ -12,11 +12,12 @@ import {
   getSuccessStreak,
   getTotalAnswers,
 } from '../../store/lesson/selectors';
-import Guesser from './Guesser';
+import Guesser from './guesser';
 import LessonQuestion from './LessonQuestion';
 import Writer from './Writer';
 import { useAuth } from '../../contexts/authContext';
 import reactToKanaChoice from '../../service/achievements';
+import { LessonPageContainer } from './styles';
 
 const Lesson: React.FC = () => {
   const dispatch = useDispatch();
@@ -71,8 +72,9 @@ const Lesson: React.FC = () => {
   };
 
   return (
-    <div>
-      { selectedMaterial && preparedKanas && preparedKanas?.length > 3 && currentKana
+    <>
+      <LessonPageContainer>
+        { selectedMaterial && preparedKanas && preparedKanas?.length > 3 && currentKana
       && (
       <>
         <LessonQuestion selectedMaterial={selectedMaterial} kanaToGuess={currentKana} />
@@ -93,6 +95,7 @@ const Lesson: React.FC = () => {
           )}
       </>
       )}
+      </LessonPageContainer>
       <Modal
         isOpen={modalIsOpen}
         contentLabel="Choose correct kana"
@@ -106,7 +109,7 @@ const Lesson: React.FC = () => {
           </div>
         )}
       </Modal>
-    </div>
+    </>
   );
 };
 
