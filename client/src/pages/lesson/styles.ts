@@ -1,4 +1,4 @@
-import { Paper } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
 import styled, { css } from 'styled-components';
 
 export const LessonPageContainer = styled.div`
@@ -57,4 +57,19 @@ export const PaperGuesser = styled(Paper) <{ $selected?: boolean }>`
     && css`
       color: #1cb0f6;
   `}
+`;
+
+export const CanvasButtons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 0.25em;
+`;
+
+export const CanvasButton = styled(Button)`
+  margin: 0.25em 0 0.25em 0.5em;
+`;
+
+export const CanvasIcon = styled.div`
+  font-size: clamp(2em, 10vw, 4em);
 `;

@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 let drawing = false;
 let brushX = 0; let brushY = 0;
-const smoothnessRadius = 0;
 
 const blackColor = '#000000';
 export const whiteColor = '#FFFFFF';
@@ -42,6 +41,7 @@ export const draw = (
   context: CanvasRenderingContext2D | null,
   event: React.MouseEvent | React.TouchEvent,
   left: number, top: number,
+  smoothnessRadius = 0,
 ): void => {
   if (context && drawing) {
     let eventPosX: number; let eventPosY: number;
