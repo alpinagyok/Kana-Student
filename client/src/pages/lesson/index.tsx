@@ -14,7 +14,7 @@ import {
 } from '../../store/lesson/selectors';
 import Guesser from './guesser';
 import LessonQuestion from './LessonQuestion';
-import Writer from './Writer';
+import Writer from './writer';
 import { useAuth } from '../../contexts/authContext';
 import reactToKanaChoice from '../../service/achievements';
 import { LessonPageContainer } from './styles';

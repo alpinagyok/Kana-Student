@@ -1,7 +1,7 @@
 import { Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 import { Kana } from '../../../store/interfaces';
-import { PaperGuesser, PaperGuesserWrapper } from '../styles';
+import { PaperGuesser, PaperGuesserWrapper } from './styles';
 
 interface Props {
   handleKanaChoice: (chosenKana: Kana, kanaToGuess: Kana) => void;

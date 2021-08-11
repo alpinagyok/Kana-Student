@@ -6,19 +6,21 @@ import React, {
   useEffect, useRef, useState,
 } from 'react';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
-import { IResponse } from '../../api/interfaces';
-import Error from '../../components/common/Error';
-import Loading from '../../components/common/Loading';
+import { IResponse } from '../../../api/interfaces';
+import Error from '../../../components/common/Error';
+import Loading from '../../../components/common/Loading';
 import {
   beginDrawing, draw, endDrawing, clearCanvas, whiteColor,
-} from '../../service/drawing';
-import { loadModel, predict } from '../../service/model';
+} from '../../../service/drawing';
+import { loadModel, predict } from '../../../service/model';
 import {
   FAILED, IDLE, Kana, LOADING, SimplifiedMaterialBlock,
-} from '../../store/interfaces';
+} from '../../../store/interfaces';
 import {
-  CanvasButton, CanvasButtons, LessonCont,
+  BottomLine,
+  CanvasButton, CanvasButtons, CanvasWrapper, LeftLine, RightLine, TopLine,
 } from './styles';
+import { LessonCont } from '../styles';
 
 interface Props {
   randomKanas: Kana[];
@@ -45,10 +47,9 @@ const Writer: React.FC<Props> = ({
   const [model, setModel] = useState<LayersModel>();
   const [resStatus, setResStatus] = useState<IResponse>({ type: IDLE, message: '' });
   const [useSmoothness, setUseSmoothness] = useState(false);
+  const [canvasSize, setCanvasSize] = useState(500);
 
-  const canvasSize = 500;
-  const canvasBorderRation = 1 / 8;
-  const canvasBorder = canvasSize * canvasBorderRation;
+  const canvasBorderRatio = 1 / 8;
 
   useEffect(() => {
     canvas = canvasRef.current;
@@ -64,7 +65,6 @@ const Writer: React.FC<Props> = ({
     }
     if (resStatus.type === IDLE) { loadModel(materialName, setModel, setResStatus); }
 
-    // useState here messes with context, so classic js it is
     const handleResize = () => {
       if (canvas) {
         ({ left, top } = canvas.getBoundingClientRect());
@@ -75,25 +75,7 @@ const Writer: React.FC<Props> = ({
         context.canvas.width = writerContWidth;
         context.canvas.height = writerContWidth;
 
-        // Resizing of dotted lines in canvas
-
-        (writerCont.querySelector('#canvas-border') as HTMLElement).style.width = `${writerContWidth}px`;
-        (writerCont.querySelector('#canvas-border') as HTMLElement).style.height = `${writerContWidth}px`;
-
-        const verticalLines = Array.from((writerCont.getElementsByClassName('canvas-border-line-vert') as HTMLCollectionOf<HTMLElement>));
-        const horizontalLines = Array.from((writerCont.getElementsByClassName('canvas-border-line-horiz') as HTMLCollectionOf<HTMLElement>));
-
-        verticalLines.forEach((line) => {
-          line.style.height = `${writerContWidth}px`;
-        });
-        horizontalLines.forEach((line) => {
-          line.style.width = `${writerContWidth}px`;
-        });
-
-        [...verticalLines, ...horizontalLines].forEach((line) => {
-          const dir = (line.id.replace('canvas-border-', '') as 'left' | 'right' | 'top' | 'bottom');
-          line.style[dir] = `${writerContWidth * canvasBorderRation}px`;
-        });
+        setCanvasSize(writerContWidth);
       }
     };
 
@@ -101,7 +83,7 @@ const Writer: React.FC<Props> = ({
     window.addEventListener('resize', handleResize);
 
     return () => window.removeEventListener('resize', handleResize);
-  }, [resStatus, randomKanas, useSmoothness]);
+  }, [resStatus, randomKanas, useSmoothness, canvasSize]);
 
   const handlePredict = async () => {
     const predictedKanaJapName = await predict(model, canvas, context, materialName);
@@ -114,15 +96,7 @@ const Writer: React.FC<Props> = ({
       {resStatus.type === LOADING && (<Loading message={resStatus.message} />)}
       {model && (
         <>
-          <div
-            id="canvas-border"
-            style={{
-              position: 'relative',
-              border: '1px solid black',
-              width: `${canvasSize}px`,
-              height: `${canvasSize}px`,
-            }}
-          >
+          <CanvasWrapper $size={canvasSize}>
             <canvas
               onMouseDown={(e) => beginDrawing(context, e, left, top)}
               onTouchStart={(e) => beginDrawing(context, e, left, top)}
@@ -133,50 +107,11 @@ const Writer: React.FC<Props> = ({
               width={canvasSize}
               height={canvasSize}
             />
-            <div
-              id="canvas-border-left"
-              className="canvas-border-line-vert"
-              style={{
-                height: `${canvasSize}px`,
-                position: 'absolute',
-                top: 0,
-                left: `${canvasBorder}px`,
-                borderLeft: '1px black dotted',
-              }}
-            />
-            <div
-              id="canvas-border-right"
-              className="canvas-border-line-vert"
-              style={{
-                height: `${canvasSize}px`,
-                position: 'absolute',
-                top: 0,
-                right: `${canvasBorder}px`,
-                borderRight: '1px black dotted',
-              }}
-            />
-            <div
-              id="canvas-border-top"
-              className="canvas-border-line-horiz"
-              style={{
-                width: `${canvasSize}px`,
-                position: 'absolute',
-                top: `${canvasBorder}px`,
-                left: 0,
-                borderTop: '1px black dotted',
-              }}
-            />
-            <div
-              id="canvas-border-bottom"
-              className="canvas-border-line-horiz"
-              style={{
-                width: `${canvasSize}px`,
-                position: 'absolute',
-                bottom: `${canvasBorder}px`,
-                left: 0,
-                borderBottom: '1px black dotted',
-              }}
-            />
+            <LeftLine $size={canvasSize} $borderRation={canvasBorderRatio} />
+            <RightLine $size={canvasSize} $borderRation={canvasBorderRatio} />
+            <TopLine $size={canvasSize} $borderRation={canvasBorderRatio} />
+            <BottomLine $size={canvasSize} $borderRation={canvasBorderRatio} />
+
             <CanvasButtons>
               <FormControlLabel
                 control={(
@@ -196,7 +131,7 @@ const Writer: React.FC<Props> = ({
                 Confirm
               </CanvasButton>
             </CanvasButtons>
-          </div>
+          </CanvasWrapper>
         </>
       )}
     </LessonCont>
