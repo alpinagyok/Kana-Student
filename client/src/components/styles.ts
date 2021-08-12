@@ -14,7 +14,7 @@ export const StyledSpan = styled.span`
   }
 `;
 
-export const StyledNavItem = styled(Link)<{$isGrowing?: boolean, $selected?: boolean}>`
+export const StyledNavItem = styled(Link)<{$isGrowing?: boolean, $selected?: boolean, $hidden?: boolean}>`
   display: flex;
   ${({ $isGrowing }) => $isGrowing
     && css`
@@ -32,9 +32,18 @@ export const StyledNavItem = styled(Link)<{$isGrowing?: boolean, $selected?: boo
   padding-right: clamp(0em, 1.5vw, 1em);
   cursor: pointer;
   text-decoration: inherit;
-  @media (max-width: 810px) {
-    flex-grow: 0;
+  @media (max-width: 820px) {
+    flex-grow: 1;
+    justify-content: center;
+    width: 0;
   }
+  ${({ $hidden }) => $hidden
+    && css`
+      flex-grow: 0 !important;
+      overflow: hidden !important;
+      padding: 0 !important;
+      width: 0 !important;
+  `}
 `;
 
 export const StyledIcon = styled.div`

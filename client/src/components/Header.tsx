@@ -11,10 +11,12 @@ import {
   AccountBox as AccountIcon,
   Home as HomeIcon,
 } from '@material-ui/icons';
+import { useSelector } from 'react-redux';
 import { signOut } from '../api/auth';
 import { useAuth } from '../contexts/authContext';
 import AuthModal from './AuthModal';
 import { StyledIcon, StyledNavItem, StyledSpan } from './styles';
+import { getPreparedKanas, getSelectedMaterialsBlock } from '../store/lesson/selectors';
 
 export const LOGIN = 'login' as const;
 export const SIGNUP = 'signup' as const;
@@ -26,6 +28,9 @@ const Header: React.FC = () => {
   const location = useLocation();
   const [openedModal, setOpenedModal] = useState<AuthModalType>();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const selectedMaterial = useSelector(getSelectedMaterialsBlock);
+  const preparedKanas = useSelector(getPreparedKanas);
 
   useEffect(() => {
     Modal.setAppElement('body');
@@ -84,7 +89,11 @@ const Header: React.FC = () => {
             <StyledIcon as={LearnIcon} />
             <StyledSpan>learn</StyledSpan>
           </StyledNavItem>
-          <StyledNavItem to="/lesson" $selected={currentPage === 'lesson'}>
+          <StyledNavItem
+            to="/lesson"
+            $hidden={!selectedMaterial || !preparedKanas || preparedKanas?.length < 4}
+            $selected={currentPage === 'lesson'}
+          >
             <StyledIcon as={LessonIcon} />
             <StyledSpan>lesson</StyledSpan>
           </StyledNavItem>
