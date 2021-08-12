@@ -16,13 +16,21 @@ import Lesson from './pages/lesson';
 import Achievements from './pages/achievements';
 import { AuthProvider } from './contexts/authContext';
 
+// Make sure that app height is proper (safari fix)
+const appHeight = () => {
+  const doc = document.documentElement;
+  doc.style.setProperty('--app-height', `${window.innerHeight}px`);
+};
+window.addEventListener('resize', appHeight);
+appHeight();
+
 ReactDOM.render(
   // <React.StrictMode>
   <Router>
     <Provider store={store}>
       <AuthProvider>
         <Header />
-        <Container maxWidth="lg">
+        <Container style={{ flex: 1 }} maxWidth="lg">
           <Switch>
             <Route exact path="/" component={Test} />
             <Route exact path="/learn" component={Stepper} />
