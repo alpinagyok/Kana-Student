@@ -9,7 +9,7 @@ export const StyledSpan = styled.span`
   padding: 0 0.3em;
   font-weight: 600;
   text-transform: uppercase;
-  @media (max-width: 760px) {
+  @media (max-width: 820px) {
     display: none;
   }
 `;

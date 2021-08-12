@@ -10,21 +10,12 @@ export const LessonPageContainer = styled.div`
   }
 `;
 
-export const QuestionCont = styled.div`
-  flex-basis: 40%;
-  margin-left: clamp(2em, 4vw, 4em);
-
-  @media (max-width: 760px) {
-    flex-basis: 100%;
-    margin-left: 0;
-  }
-`;
-
 export const LessonCont = styled.div`
-  flex: 1;
+  width: 60%;
 
   @media (max-width: 760px) {
     margin: auto;
+    width: 100%;
   }
   
   padding: 2em 0;
