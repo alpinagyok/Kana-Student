@@ -38,7 +38,7 @@ const Lesson: React.FC = () => {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
 
   useEffect(() => {
-    if (!selectedMaterial || !preparedKanas || preparedKanas?.length < 4) history.push('/learn');
+    if (!lessonType || !selectedMaterial || !preparedKanas || preparedKanas?.length < 4) history.push('/learn');
     else if (!currentKana) {
       dispatch(shufflePreparedKanas());
     }
@@ -74,27 +74,28 @@ const Lesson: React.FC = () => {
   return (
     <>
       <LessonPageContainer>
-        { selectedMaterial && preparedKanas && preparedKanas?.length > 3 && currentKana
-      && (
-      <>
-        <LessonQuestion selectedMaterial={selectedMaterial} kanaToGuess={currentKana} />
-        { lessonType === WRITER_LESSON
-          ? (
-            <Writer
-              randomKanas={preparedKanas.slice(0, 4)}
-              kanaToGuess={currentKana}
-              handleKanaChoice={handleKanaChoice}
-              selectedMaterial={selectedMaterial}
-            />
-          ) : (
-            <Guesser
-              randomKanas={preparedKanas.slice(0, 4)}
-              kanaToGuess={currentKana}
-              handleKanaChoice={handleKanaChoice}
-            />
-          )}
-      </>
-      )}
+        {lessonType && selectedMaterial
+        && preparedKanas && preparedKanas?.length > 3 && currentKana
+        && (
+        <>
+          <LessonQuestion selectedMaterial={selectedMaterial} kanaToGuess={currentKana} />
+          { lessonType === WRITER_LESSON
+            ? (
+              <Writer
+                randomKanas={preparedKanas.slice(0, 4)}
+                kanaToGuess={currentKana}
+                handleKanaChoice={handleKanaChoice}
+                selectedMaterial={selectedMaterial}
+              />
+            ) : (
+              <Guesser
+                randomKanas={preparedKanas.slice(0, 4)}
+                kanaToGuess={currentKana}
+                handleKanaChoice={handleKanaChoice}
+              />
+            )}
+        </>
+        )}
       </LessonPageContainer>
       <Modal
         isOpen={modalIsOpen}
@@ -102,11 +103,11 @@ const Lesson: React.FC = () => {
       >
         <button type="button" onClick={() => setIsOpen(false)}>close</button>
         {correctKana && chosentKana && (
-          <div>
-            {`your anwser was ${isAnswerCorrect ? 'correct' : 'wrong'}`}
-            {`correct answer: ${correctKana.japName} (${correctKana.romName})`}
-            {`your answer: ${chosentKana.japName} (${chosentKana.romName})`}
-          </div>
+        <div>
+          {`your anwser was ${isAnswerCorrect ? 'correct' : 'wrong'}`}
+          {`correct answer: ${correctKana.japName} (${correctKana.romName})`}
+          {`your answer: ${chosentKana.japName} (${chosentKana.romName})`}
+        </div>
         )}
       </Modal>
     </>

@@ -16,7 +16,7 @@ import { signOut } from '../api/auth';
 import { useAuth } from '../contexts/authContext';
 import AuthModal from './AuthModal';
 import { StyledIcon, StyledNavItem, StyledSpan } from './styles';
-import { getPreparedKanas, getSelectedMaterialsBlock } from '../store/lesson/selectors';
+import { getLessonType, getPreparedKanas, getSelectedMaterialsBlock } from '../store/lesson/selectors';
 
 export const LOGIN = 'login' as const;
 export const SIGNUP = 'signup' as const;
@@ -29,6 +29,7 @@ const Header: React.FC = () => {
   const [openedModal, setOpenedModal] = useState<AuthModalType>();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
+  const lessonType = useSelector(getLessonType);
   const selectedMaterial = useSelector(getSelectedMaterialsBlock);
   const preparedKanas = useSelector(getPreparedKanas);
 
@@ -91,7 +92,9 @@ const Header: React.FC = () => {
           </StyledNavItem>
           <StyledNavItem
             to="/lesson"
-            $hidden={!selectedMaterial || !preparedKanas || preparedKanas?.length < 4}
+            $hidden={
+              !lessonType || !selectedMaterial || !preparedKanas || preparedKanas?.length < 4
+            }
             $selected={currentPage === 'lesson'}
           >
             <StyledIcon as={LessonIcon} />
