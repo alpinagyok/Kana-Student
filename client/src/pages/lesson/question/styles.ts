@@ -29,7 +29,13 @@ export const Cat = styled.img`
   }
 `;
 
-export const MobileKanaTypography = styled(Typography)`
+export const KanaQuestion = styled(Typography)`
+  @media (max-width: 760px) {
+    display: none;
+  }
+`;
+
+export const MobileKanaQuestion = styled(Typography)`
   @media (min-width: 761px) {
     display: none;
   }

@@ -9,11 +9,14 @@ export const CanvasButtons = styled.div`
 `;
 
 export const CanvasButton = styled(Button)`
-  margin: 0.25em 0 0.25em 0.5em;
+  margin-right: 0.25em;
+  min-width: 0;
+  padding: 0;
+  border-radius: 1.6em;
 `;
 
 export const CanvasIcon = styled.div`
-  font-size: clamp(2em, 10vw, 4em);
+  font-size: clamp(2.6em, 10vw, 4em);
 `;
 
 export const CanvasWrapper = styled.div<{ $size: number }>`

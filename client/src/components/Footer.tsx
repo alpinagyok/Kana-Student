@@ -5,11 +5,11 @@ const Footer: React.FC = () => (
   <div style={{ borderTop: '1px solid gray' }}>
     <Container
       style={{
-        padding: '1.3em',
+        padding: '1em',
       }}
       maxWidth="lg"
     >
-      <Typography variant="h6" align="center">
+      <Typography style={{ fontSize: '1em' }} variant="h6" align="center">
         Ⓒ
         {' '}
         {new Date().getFullYear()}

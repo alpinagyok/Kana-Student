@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const LessonPageContainer = styled.div`
-  padding: 2em 0;
+  padding-top: clamp(1.2em, 3vw, 2em);
+  padding-bottom: clamp(1.2em, 3vw, 2em);
 
   @media (min-width: 761px) {
     display: flex;
@@ -18,6 +19,6 @@ export const LessonCont = styled.div`
     width: 100%;
   }
   
-  padding: 2em 0;
+  padding-top: clamp(1.2em, 3vw, 2em);
   max-width: 500px;
 `;

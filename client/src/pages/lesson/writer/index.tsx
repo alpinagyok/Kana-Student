@@ -6,6 +6,10 @@ import React, {
   useEffect, useRef, useState,
 } from 'react';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
+import {
+  Check as CheckIcon,
+  Clear as ClearIcon,
+} from '@material-ui/icons';
 import { IResponse } from '../../../api/interfaces';
 import Error from '../../../components/common/Error';
 import Loading from '../../../components/common/Loading';
@@ -18,7 +22,7 @@ import {
 } from '../../../store/interfaces';
 import {
   BottomLine,
-  CanvasButton, CanvasButtons, CanvasWrapper, LeftLine, RightLine, TopLine,
+  CanvasButton, CanvasButtons, CanvasIcon, CanvasWrapper, LeftLine, RightLine, TopLine,
 } from './styles';
 import { LessonCont } from '../styles';
 
@@ -111,27 +115,27 @@ const Writer: React.FC<Props> = ({
             <RightLine $size={canvasSize} $borderRation={canvasBorderRatio} />
             <TopLine $size={canvasSize} $borderRation={canvasBorderRatio} />
             <BottomLine $size={canvasSize} $borderRation={canvasBorderRatio} />
-
-            <CanvasButtons>
-              <FormControlLabel
-                control={(
-                  <Checkbox
-                    checked={useSmoothness}
-                    onChange={() => setUseSmoothness(!useSmoothness)}
-                    name="useSmoothness"
-                    color="primary"
-                  />
-                )}
-                label="Use smoothness"
-              />
-              <CanvasButton variant="outlined" color="secondary" onClick={() => clearCanvas(canvas, context)}>
-                Clear
-              </CanvasButton>
-              <CanvasButton variant="outlined" color="primary" onClick={handlePredict}>
-                Confirm
-              </CanvasButton>
-            </CanvasButtons>
           </CanvasWrapper>
+
+          <CanvasButtons>
+            <FormControlLabel
+              control={(
+                <Checkbox
+                  checked={useSmoothness}
+                  onChange={() => setUseSmoothness(!useSmoothness)}
+                  name="useSmoothness"
+                  color="primary"
+                />
+                )}
+              label="Use smoothness"
+            />
+            <CanvasButton color="secondary" onClick={() => clearCanvas(canvas, context)}>
+              <CanvasIcon as={ClearIcon} color="secondary" />
+            </CanvasButton>
+            <CanvasButton color="primary" onClick={handlePredict}>
+              <CanvasIcon as={CheckIcon} color="primary" />
+            </CanvasButton>
+          </CanvasButtons>
         </>
       )}
     </LessonCont>

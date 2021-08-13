@@ -1,8 +1,7 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import { Kana, SimplifiedMaterialBlock } from '../../../store/interfaces';
 import {
-  QuestionCont, CatContainer, Cat, Bubble, MobileKanaTypography, DesktopKanaTypography,
+  QuestionCont, CatContainer, Cat, Bubble, DesktopKanaTypography, MobileKanaQuestion, KanaQuestion,
 } from './styles';
 import catImg from './lucky-cat.png';
 
@@ -21,16 +20,23 @@ const LessonQuestion: React.FC<Props> = ({ selectedMaterial, kanaToGuess }) => (
         </DesktopKanaTypography>
       </Bubble>
     </CatContainer>
-    <Typography align="center" variant="h5">
+    <KanaQuestion align="center" variant="h5">
       What is this
       {' '}
       {selectedMaterial.name}
       ?
-    </Typography>
-    <MobileKanaTypography align="center" variant="h4">
-      {kanaToGuess.romName}
-    </MobileKanaTypography>
+    </KanaQuestion>
 
+    <MobileKanaQuestion align="center" variant="h5">
+      What is the
+      {' '}
+      {selectedMaterial.name}
+      {' '}
+      for
+      {' '}
+      <b>{kanaToGuess.romName}</b>
+      ?
+    </MobileKanaQuestion>
   </QuestionCont>
 );
 
