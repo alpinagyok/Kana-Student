@@ -12,7 +12,7 @@ export const signIn = async (email: string, password: string): Promise<IResponse
     );
     return { type: SUCCEEDED, message: '' };
   } catch (error) {
-    return { type: FAILED, message: error.code };
+    return { type: FAILED, message: error.message };
   }
 };
 
@@ -29,7 +29,7 @@ export const signUp = async (
     }));
     return { type: SUCCEEDED, message: '' };
   } catch (err) {
-    return { type: FAILED, message: err?.response?.data?.code ?? 'internal error' };
+    return { type: FAILED, message: err?.response?.data?.message ?? 'Internal error' };
   }
 };
 

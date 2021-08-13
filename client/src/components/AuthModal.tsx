@@ -61,8 +61,6 @@ const AuthModal: React.FC<Props> = ({ openedModal, setOpenedModal }) => {
     >
       <ModalPaper>
         <form onSubmit={handleAuth}>
-          {resStatus.type === FAILED && (<Error message={resStatus.message} />)}
-          {resStatus.type === LOADING && (<Loading message={resStatus.message} />)}
           <ModalFields>
             <ModalTextField value={email} onChange={(e) => setEmail(e.target.value)} label="Email" />
             <ModalTextField value={password} onChange={(e) => setPassword(e.target.value)} label="Password" />
@@ -70,6 +68,8 @@ const AuthModal: React.FC<Props> = ({ openedModal, setOpenedModal }) => {
             <ModalTextField value={displayName} onChange={(e) => setDisplayName(e.target.value)} label="Display Name" />
             )}
           </ModalFields>
+          {resStatus.type === FAILED && (<Error message={resStatus.message} />)}
+          {resStatus.type === LOADING && (<Loading message={resStatus.message} />)}
           <ModalButtons>
             <ModalButton type="submit" color="primary" variant="outlined">
               {openedModal}

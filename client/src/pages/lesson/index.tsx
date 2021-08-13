@@ -104,7 +104,7 @@ const Lesson: React.FC = () => {
         closeAfterTransition
       >
         <ModalPaper>
-          <Typography gutterBottom variant="h4" align="center">
+          <Typography color={isAnswerCorrect ? 'primary' : 'error'} gutterBottom variant="h4" align="center">
             {isAnswerCorrect ? 'Correct!' : 'Wrong :('}
           </Typography>
           {correctKana && chosentKana && (
