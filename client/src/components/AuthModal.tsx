@@ -1,5 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react';
-import Modal from 'react-modal';
+import React, { FormEvent, useState } from 'react';
 import { signIn, signUp } from '../api/auth';
 import { IResponse } from '../api/interfaces';
 import {
@@ -8,6 +7,10 @@ import {
 import Error from './common/Error';
 import Loading from './common/Loading';
 import { AuthModalType, LOGIN, SIGNUP } from './Header';
+import {
+  ModalButton,
+  ModalButtons, ModalFields, ModalPaper, ModalTextField, StyledModal,
+} from './styles';
 
 interface Props {
   openedModal: AuthModalType;
@@ -50,46 +53,34 @@ const AuthModal: React.FC<Props> = ({ openedModal, setOpenedModal }) => {
     else handleSignUp();
   };
 
-  useEffect(() => {
-    Modal.setAppElement('body');
-  }, []);
-
   return (
-    <Modal
-      isOpen={openedModal !== undefined}
-      contentLabel="Auth modal"
+    <StyledModal
+      open={openedModal !== undefined}
+      onClose={closeModal}
+      closeAfterTransition
     >
-      <button type="button" onClick={closeModal}>close</button>
-      <form onSubmit={handleAuth}>
-        {resStatus.type === FAILED && (<Error message={resStatus.message} />)}
-        {resStatus.type === LOADING && (<Loading message={resStatus.message} />)}
-        <input
-          type="text"
-          value={email}
-          placeholder="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="text"
-          value={password}
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {openedModal === SIGNUP && (
-          <input
-            type="text"
-            value={displayName}
-            placeholder="displayName"
-            onChange={(e) => setDisplayName(e.target.value)}
-          />
-        )}
-        <button
-          type="submit"
-        >
-          {openedModal}
-        </button>
-      </form>
-    </Modal>
+      <ModalPaper>
+        <form onSubmit={handleAuth}>
+          {resStatus.type === FAILED && (<Error message={resStatus.message} />)}
+          {resStatus.type === LOADING && (<Loading message={resStatus.message} />)}
+          <ModalFields>
+            <ModalTextField value={email} onChange={(e) => setEmail(e.target.value)} label="Email" />
+            <ModalTextField value={password} onChange={(e) => setPassword(e.target.value)} label="Password" />
+            {openedModal === SIGNUP && (
+            <ModalTextField value={displayName} onChange={(e) => setDisplayName(e.target.value)} label="Display Name" />
+            )}
+          </ModalFields>
+          <ModalButtons>
+            <ModalButton type="submit" color="primary" variant="outlined">
+              {openedModal}
+            </ModalButton>
+            <ModalButton color="secondary" variant="outlined" onClick={closeModal}>
+              Close
+            </ModalButton>
+          </ModalButtons>
+        </form>
+      </ModalPaper>
+    </StyledModal>
   );
 };
 export default AuthModal;

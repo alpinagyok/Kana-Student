@@ -2,7 +2,6 @@ import {
   Container, Divider, Menu, MenuItem,
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
 import { useLocation } from 'react-router-dom';
 import {
   EmojiEvents as AchievementsIcon,
@@ -32,10 +31,6 @@ const Header: React.FC = () => {
   const lessonType = useSelector(getLessonType);
   const selectedMaterial = useSelector(getSelectedMaterialsBlock);
   const preparedKanas = useSelector(getPreparedKanas);
-
-  useEffect(() => {
-    Modal.setAppElement('body');
-  }, []);
 
   useEffect(() => {
     setCurrentPage(location.pathname.replace('/', ''));

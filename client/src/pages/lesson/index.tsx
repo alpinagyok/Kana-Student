@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Modal from 'react-modal';
+import { Typography } from '@material-ui/core';
 import { Kana, WRITER_LESSON } from '../../store/interfaces';
 import { setStreak, shufflePreparedKanas } from '../../store/lesson/reducer';
 import {
@@ -18,6 +18,9 @@ import Writer from './writer';
 import { useAuth } from '../../contexts/authContext';
 import reactToKanaChoice from '../../service/achievements';
 import { LessonPageContainer } from './styles';
+import {
+  ModalButton, ModalButtons, ModalPaper, StyledModal,
+} from '../../components/styles';
 
 const Lesson: React.FC = () => {
   const dispatch = useDispatch();
@@ -42,8 +45,6 @@ const Lesson: React.FC = () => {
     else if (!currentKana) {
       dispatch(shufflePreparedKanas());
     }
-
-    Modal.setAppElement('body');
   }, []);
 
   // Check for new achievements
@@ -97,19 +98,46 @@ const Lesson: React.FC = () => {
         </>
         )}
       </LessonPageContainer>
-      <Modal
-        isOpen={modalIsOpen}
-        contentLabel="Choose correct kana"
+      <StyledModal
+        open={modalIsOpen}
+        onClose={() => setIsOpen(false)}
+        closeAfterTransition
       >
-        <button type="button" onClick={() => setIsOpen(false)}>close</button>
-        {correctKana && chosentKana && (
-        <div>
-          {`your anwser was ${isAnswerCorrect ? 'correct' : 'wrong'}`}
-          {`correct answer: ${correctKana.japName} (${correctKana.romName})`}
-          {`your answer: ${chosentKana.japName} (${chosentKana.romName})`}
-        </div>
-        )}
-      </Modal>
+        <ModalPaper>
+          <Typography gutterBottom variant="h4" align="center">
+            {isAnswerCorrect ? 'Correct!' : 'Wrong :('}
+          </Typography>
+          {correctKana && chosentKana && (
+          <>
+            <Typography variant="h5" align="center">
+              Your answer:
+              {' '}
+              {chosentKana.japName}
+              {' '}
+              (
+              {chosentKana.romName}
+              )
+            </Typography>
+            {!isAnswerCorrect && (
+            <Typography variant="h5" align="center">
+              Correct answer:
+              {' '}
+              {correctKana.japName}
+              {' '}
+              (
+              {correctKana.romName}
+              )
+            </Typography>
+            )}
+          </>
+          )}
+          <ModalButtons>
+            <ModalButton color="primary" variant="outlined" onClick={() => setIsOpen(false)}>
+              Close
+            </ModalButton>
+          </ModalButtons>
+        </ModalPaper>
+      </StyledModal>
     </>
   );
 };

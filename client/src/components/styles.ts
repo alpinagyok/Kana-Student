@@ -1,3 +1,6 @@
+import {
+  Button, Modal, Paper, TextField,
+} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
@@ -50,4 +53,37 @@ export const StyledIcon = styled.div`
   padding: 0 0.3em;
   color: currentColor;
   font-size: 1.4em;
+`;
+
+export const StyledModal = styled(Modal)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+
+  background-color: rgb(0 0 0 / 70%);;
+`;
+
+export const ModalPaper = styled(Paper)`
+  padding: 1em;
+  overflow-x: hidden;
+`;
+
+export const ModalButtons = styled.div`
+  display: flex;
+  margin-top: 2em;
+  justify-content: center;
+`;
+
+export const ModalButton = styled(Button)`
+  margin: 0.5em;
+`;
+
+export const ModalFields = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const ModalTextField = styled(TextField)`
+  margin: 0.5em;
 `;
