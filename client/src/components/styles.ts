@@ -56,10 +56,14 @@ export const StyledIcon = styled.div`
 `;
 
 export const StyledModal = styled(Modal)`
+  // ios scrolling fix
+  height: 100vh;
+  height: var(--app-height);
+
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1em;
+  padding: 0 1em;
 
   background-color: rgb(0 0 0 / 70%);;
 `;

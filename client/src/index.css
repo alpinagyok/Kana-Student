@@ -12,6 +12,12 @@ code {
     monospace;
 }
 
+/* ios scrolling fix */
+.MuiPopover-root {
+  height: 100vh;
+  height: var(--app-height);
+}
+
 #root {
   height: 100vh;
   height: var(--app-height);
