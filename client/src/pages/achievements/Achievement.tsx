@@ -1,5 +1,7 @@
+import { Typography } from '@material-ui/core';
 import React from 'react';
 import { Achievement as IAchievement } from '../../store/interfaces';
+import { AchievementImage, AchievemntPaper, Ribbon } from './styles';
 
 interface Props {
   achievement: IAchievement;
@@ -12,12 +14,16 @@ const Achievement: React.FC<Props> = ({ achievement, isCompleted = false }) => {
   } = achievement;
 
   return (
-    <div>
-      <h1>{name}</h1>
-      <h1>{description}</h1>
-      <h1>{icon}</h1>
-      <h1>{isCompleted}</h1>
-    </div>
+    <AchievemntPaper elevation={isCompleted ? 6 : 2}>
+      {isCompleted && <Ribbon variant="h6">Done!</Ribbon>}
+      <AchievementImage src={icon} alt="Achievement icon" />
+      <Typography variant="h5" align="center">
+        {name}
+      </Typography>
+      <Typography variant="subtitle1" align="center">
+        {description}
+      </Typography>
+    </AchievemntPaper>
   );
 };
 
