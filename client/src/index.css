@@ -22,6 +22,9 @@ code {
   height: 100vh;
   height: var(--app-height);
 
+  /* needed for proper toast positioning on ios */
+  position: relative;
+
   display: flex;
   flex-direction: column;
 }

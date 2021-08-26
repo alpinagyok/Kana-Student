@@ -1,22 +1,37 @@
 import {
-  Paper,
+  Paper, Typography,
 } from '@material-ui/core';
 import styled, { css } from 'styled-components';
 
 export const ToastsContainer = styled.div`
+  // Show over material modal
   z-index: 1500;
-  position: fixed;
+
+  // sits on #root
+  position: absolute;
   left: 50%;
-  bottom: 0;
+  bottom: 1.5em;
   transform: translate(-50%, 0%);
   display: flex;
   align-items: center;
   flex-direction: column-reverse;
 `;
 
+export const ToastImage = styled.img`
+  width: 80px;
+  height: 80px;
+`;
+
+export const ToastTypogrophy = styled(Typography)`
+  padding: 0 1.5em;
+`;
+
 export const Toast = styled(Paper) <{ $isFadingOut?: boolean }>`
-  width: clamp(200px, 80vw, 800px);
-  padding: 2em;
+  display: flex;
+  padding: 1em;
+  margin: 0.5em 0;
+  border: 3px solid #1cb0f6;
+  align-items: center;
 
   -webkit-animation: fadein .3s linear forwards;
   animation: fadein .3s linear forwards;
