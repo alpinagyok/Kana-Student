@@ -21,11 +21,13 @@ import { LessonPageContainer } from './styles';
 import {
   ModalButton, ModalButtons, ModalPaper, StyledModal,
 } from '../../components/styles';
+import { useToast } from '../../contexts/toastContext';
 
 const Lesson: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { user, addUserAchievements } = useAuth();
+  const { addToast } = useToast();
 
   const selectedMaterial = useSelector(getSelectedMaterialsBlock);
   const preparedKanas = useSelector(getPreparedKanas);
@@ -56,6 +58,7 @@ const Lesson: React.FC = () => {
         lessonType ?? WRITER_LESSON,
         successStreak, totalAnswers,
         addUserAchievements,
+        addToast,
       );
     }
   }, [totalAnswers]);

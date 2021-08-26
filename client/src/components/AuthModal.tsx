@@ -1,6 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import { signIn, signUp } from '../api/auth';
 import { IResponse } from '../api/interfaces';
+import { useToast } from '../contexts/toastContext';
 import {
   FAILED, IDLE, LOADING, SUCCEEDED,
 } from '../store/interfaces';
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const AuthModal: React.FC<Props> = ({ openedModal, setOpenedModal }) => {
+  const { addToast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -43,6 +45,12 @@ const AuthModal: React.FC<Props> = ({ openedModal, setOpenedModal }) => {
     const res = await signUp(email, password, displayName);
     setResStatus(res);
     if (res.type === SUCCEEDED) {
+      // Show Welcome achievement on signup
+      if (addToast) {
+        addToast({
+          id: 'p0uprM2NDTzZ5J95nvxq', name: 'Welcome!', description: 'Register an account', icon: 'https://img.icons8.com/plasticine/100/000000/worker-id-card.png',
+        });
+      }
       handleLogin();
     }
   };

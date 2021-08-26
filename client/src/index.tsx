@@ -15,6 +15,8 @@ import Stepper from './pages/learn/Stepper';
 import Lesson from './pages/lesson';
 import Achievements from './pages/achievements';
 import { AuthProvider } from './contexts/authContext';
+import { ToastProvider } from './contexts/toastContext';
+import Toasts from './components/toast/Toasts';
 
 // Make sure that app height is proper (safari fix)
 const appHeight = () => {
@@ -29,19 +31,22 @@ ReactDOM.render(
   <Router>
     <Provider store={store}>
       <AuthProvider>
-        <Header />
-        <Container style={{ flex: 1 }} maxWidth="lg">
-          <Switch>
-            <Route exact path="/" component={Test} />
-            <Route exact path="/learn" component={Stepper} />
-            <Route exact path="/lesson" component={Lesson} />
-            <Route exact path="/achievements" component={Achievements} />
-            <Route exact path="/test" component={Test} />
-            <Route path="/404" component={Test} />
-            <Redirect to="/404" />
-          </Switch>
-        </Container>
-        <Footer />
+        <ToastProvider>
+          <Header />
+          <Container style={{ flex: 1 }} maxWidth="lg">
+            <Toasts />
+            <Switch>
+              <Route exact path="/" component={Test} />
+              <Route exact path="/learn" component={Stepper} />
+              <Route exact path="/lesson" component={Lesson} />
+              <Route exact path="/achievements" component={Achievements} />
+              <Route exact path="/test" component={Test} />
+              <Route path="/404" component={Test} />
+              <Redirect to="/404" />
+            </Switch>
+          </Container>
+          <Footer />
+        </ToastProvider>
       </AuthProvider>
     </Provider>
   </Router>,

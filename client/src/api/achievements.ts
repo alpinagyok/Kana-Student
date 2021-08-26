@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+  Achievement,
   LessonType,
 } from '../store/interfaces';
 import API_ENDPOINT from './constants';
@@ -9,7 +10,7 @@ const checkForNewAchievements = async (
   lessonType: LessonType,
   successStreak: number,
   totalAnswers: number,
-): Promise<string[]> => {
+): Promise<Achievement[]> => {
   try {
     const res = await axios.post(`${API_ENDPOINT}/achievements/check`,
       new URLSearchParams({

@@ -1,4 +1,5 @@
 import checkForNewAchievements from '../api/achievements';
+import { IToast } from '../contexts/toastContext';
 import { LessonType } from '../store/interfaces';
 
 const reactToKanaChoice = async (
@@ -7,6 +8,7 @@ const reactToKanaChoice = async (
   successStreak: number,
   totalAnswers: number,
   addUserAchievements: ((newAchievs: string[]) => void) | undefined,
+  addToast: ((newToast: IToast) => void) | undefined,
 ): Promise<void> => {
   const newAchievements = await checkForNewAchievements(
     materialId,
@@ -14,9 +16,19 @@ const reactToKanaChoice = async (
     successStreak, totalAnswers,
   );
   if (addUserAchievements) {
-    addUserAchievements([...newAchievements]);
+    addUserAchievements([...newAchievements.map((ach) => ach.id)]);
   }
-  // TODO: some sort of toast / popup
+  // Popup toasts for new achievements
+  if (addToast) {
+    newAchievements.forEach((achievement) => {
+      const {
+        id, name, description, icon,
+      } = achievement;
+      addToast({
+        id, name, description, icon,
+      });
+    });
+  }
 };
 
 export default reactToKanaChoice;

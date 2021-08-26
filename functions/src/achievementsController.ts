@@ -49,7 +49,7 @@ export const checkForAndAddUsersAchievments = async (
 
     // Filter the achievements that match the request
     // If smt is undefined in achievement, it doesn't matter
-    const newAchievementIDs = achievements.filter(
+    const newAchievements = achievements.filter(
       (achievement) => {
         const {
           materialId, lessonType, successStreak, totalAnswers,
@@ -60,14 +60,18 @@ export const checkForAndAddUsersAchievments = async (
           && (successStreak === undefined || body.successStreak >= successStreak)
           && (totalAnswers === undefined || body.totalAnswers >= totalAnswers);
       },
-    ).map((achievement) => achievement.id);
+    ).map((achievement) => (({
+      id, name, description, icon,
+    }) => ({
+      id, name, description, icon,
+    }))(achievement)); // create shorter achievement object
 
     // Save new achievements to the user
     await loggedInUser.set({
-      achievements: [...gottenAchievementIDs, ...newAchievementIDs],
+      achievements: [...gottenAchievementIDs, ...newAchievements.map((ach) => ach.id)],
     });
 
-    return res.status(200).json(newAchievementIDs);
+    return res.status(200).json(newAchievements);
   } catch (error) { return res.status(500).json(error.message); }
 };
 

@@ -17,7 +17,7 @@ const Achievement: React.FC<Props> = ({ achievement, isCompleted = false }) => {
     <AchievemntPaper elevation={isCompleted ? 6 : 2}>
       {isCompleted && <Ribbon variant="h6">Done!</Ribbon>}
       <AchievementImage src={icon} alt="Achievement icon" />
-      <Typography variant="h5" align="center">
+      <Typography gutterBottom variant="h5" align="center">
         {name}
       </Typography>
       <Typography variant="subtitle1" align="center">
