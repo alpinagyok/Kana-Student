@@ -8,7 +8,6 @@ import {
 import { Container } from '@material-ui/core';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
-import Test from './Test';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Stepper from './pages/learn/Stepper';
@@ -18,6 +17,7 @@ import { AuthProvider } from './contexts/authContext';
 import { ToastProvider } from './contexts/toastContext';
 import Toasts from './components/toast/Toasts';
 import LandingPage from './pages/landing';
+import Error from './components/common/Error';
 
 // Make sure that app height is proper (safari fix)
 const appHeight = () => {
@@ -41,8 +41,9 @@ ReactDOM.render(
               <Route exact path="/learn" component={Stepper} />
               <Route exact path="/lesson" component={Lesson} />
               <Route exact path="/achievements" component={Achievements} />
-              <Route exact path="/test" component={Test} />
-              <Route path="/404" component={Test} />
+              <Route path="/404">
+                <Error message="404. This page doesn't exist." />
+              </Route>
               <Redirect to="/404" />
             </Switch>
           </Container>
