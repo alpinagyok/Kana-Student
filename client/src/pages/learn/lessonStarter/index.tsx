@@ -80,6 +80,12 @@ const LessonStarter: React.FC<Props> = ({ incrementStep }) => {
           })}
         </MaterialsContainer>
 
+        {preparedKanas && preparedKanas.length > 0 && preparedKanas.length < 4 && (
+        <Typography color="secondary" variant="subtitle1" align="center" style={{ paddingBottom: '1em' }}>
+          Please choose minimum 4 kanas
+        </Typography>
+        )}
+
         {firstHalf && secondHalf && (
           <SelectableKanasContainer>
             <KanaRowsBlock>

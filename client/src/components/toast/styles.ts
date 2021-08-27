@@ -15,15 +15,16 @@ export const ToastsContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column-reverse;
+  min-width: 280px;
 `;
 
 export const ToastImage = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
 `;
 
 export const ToastTypogrophy = styled(Typography)`
-  padding: 0 1.5em;
+  padding: 0 1em;
 `;
 
 export const Toast = styled(Paper) <{ $isFadingOut?: boolean }>`

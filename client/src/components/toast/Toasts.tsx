@@ -14,12 +14,12 @@ const Toasts: React.FC = () => {
   return (
     <ToastsContainer>
       {toastList.map((toast) => (
-        <Toast elevation={10} $isFadingOut={toast.isFadingOut}>
+        <Toast key={toast.id} elevation={10} $isFadingOut={toast.isFadingOut}>
           <ToastImage src={toast.icon} alt="Achievement" />
           <ToastTypogrophy variant="h5">
             {toast.name}
           </ToastTypogrophy>
-          <Button color="primary" onClick={() => deleteToast && deleteToast(toast.id)}>
+          <Button style={{ minWidth: 0 }} color="primary" onClick={() => deleteToast && deleteToast(toast.id)}>
             <ClearIcon />
           </Button>
         </Toast>
