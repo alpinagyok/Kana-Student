@@ -17,6 +17,7 @@ import Achievements from './pages/achievements';
 import { AuthProvider } from './contexts/authContext';
 import { ToastProvider } from './contexts/toastContext';
 import Toasts from './components/toast/Toasts';
+import LandingPage from './pages/landing';
 
 // Make sure that app height is proper (safari fix)
 const appHeight = () => {
@@ -36,7 +37,7 @@ ReactDOM.render(
           <Container style={{ flex: 1 }} maxWidth="lg">
             <Toasts />
             <Switch>
-              <Route exact path="/" component={Test} />
+              <Route exact path="/" component={LandingPage} />
               <Route exact path="/learn" component={Stepper} />
               <Route exact path="/lesson" component={Lesson} />
               <Route exact path="/achievements" component={Achievements} />
