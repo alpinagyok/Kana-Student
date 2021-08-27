@@ -23,7 +23,7 @@ export const ToastImage = styled.img`
   height: 60px;
 `;
 
-export const ToastTypogrophy = styled(Typography)`
+export const ToastTypography = styled(Typography)`
   padding: 0 1em;
 `;
 

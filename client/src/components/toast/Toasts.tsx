@@ -5,7 +5,7 @@ import {
 } from '@material-ui/icons';
 import { useToast } from '../../contexts/toastContext';
 import {
-  Toast, ToastImage, ToastsContainer, ToastTypogrophy,
+  Toast, ToastImage, ToastsContainer, ToastTypography,
 } from './styles';
 
 const Toasts: React.FC = () => {
@@ -16,9 +16,9 @@ const Toasts: React.FC = () => {
       {toastList.map((toast) => (
         <Toast key={toast.id} elevation={10} $isFadingOut={toast.isFadingOut}>
           <ToastImage src={toast.icon} alt="Achievement" />
-          <ToastTypogrophy variant="h5">
+          <ToastTypography variant="h5">
             {toast.name}
-          </ToastTypogrophy>
+          </ToastTypography>
           <Button style={{ minWidth: 0 }} color="primary" onClick={() => deleteToast && deleteToast(toast.id)}>
             <ClearIcon />
           </Button>
