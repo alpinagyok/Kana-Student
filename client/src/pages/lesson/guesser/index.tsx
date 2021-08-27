@@ -15,7 +15,12 @@ interface Props {
 const Guesser: React.FC<Props> = ({ randomKanas, kanaToGuess, handleKanaChoice }) => (
   <GuesserCont>
     {randomKanas.map((kana) => (
-      <GuesserKanaCard handleKanaChoice={handleKanaChoice} kana={kana} kanaToGuess={kanaToGuess} />
+      <GuesserKanaCard
+        key={kana.romName}
+        handleKanaChoice={handleKanaChoice}
+        kana={kana}
+        kanaToGuess={kanaToGuess}
+      />
     ))}
   </GuesserCont>
 );

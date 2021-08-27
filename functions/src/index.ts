@@ -1,9 +1,10 @@
 import {
-  checkForAndAddUsersAchievments, getAllAchievements, getUsersAchievements,
+  checkForAndAddUsersAchievements, getAllAchievements, getUsersAchievements,
 } from './achievementsController';
 import getAllMaterials from './materialsController';
 import { checkIfAuthenticated, createUser } from './usersController';
 import validateUsers from './validation/users';
+import validateAchievements from './validation/achievements';
 
 const functions = require('firebase-functions');
 const express = require('express');
@@ -18,7 +19,7 @@ app.options('*', cors());
 app.get('/materials', getAllMaterials);
 
 app.get('/achievements', getAllAchievements);
-app.post('/achievements/check', checkIfAuthenticated, checkForAndAddUsersAchievments);
+app.post('/achievements/check', validateAchievements('checkForAndAddUsersAchievements'), checkIfAuthenticated, checkForAndAddUsersAchievements);
 app.get('/achievements/userSpecific', checkIfAuthenticated, getUsersAchievements);
 
 app.post('/users/create', validateUsers('createUser'), createUser);

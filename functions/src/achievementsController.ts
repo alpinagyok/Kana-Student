@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { validationResult } from 'express-validator';
 import { QueryDocumentSnapshot } from 'firebase-functions/lib/providers/firestore';
 import { db } from './config/firebase';
 import { RequestCustom } from './usersController';
@@ -27,12 +28,17 @@ interface Condition {
   totalAnswers: number;
 }
 
-export const checkForAndAddUsersAchievments = async (
+export const checkForAndAddUsersAchievements = async (
   req: RequestCustom<Record<string, never>, Record<string, never>, Condition>,
   res: Response,
 ): Promise<Response> => {
   try {
     const { body } = req;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array()[0].msg);
+    }
 
     const allAchievements: Achievement[] = [];
     const querySnapshot = await db.collection('achievements').get();
